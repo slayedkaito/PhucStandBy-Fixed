@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Rotate to landscape + charge to view.
+• Swipe HORIZONTALLY: clock &lt;-&gt; photo wallpaper page
+• Swipe UP/DOWN: clock style 1 → 2 → photo + weather (on photo page, switches photo)
+• Tap music dot: open music control panel
+Changes take effect immediately, no respring required.</string>
+			<key>label</key>
+			<string>StandBy </string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>enabled</string>
+			<key>label</key>
+			<string>Enable StandBy</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>use24h</string>
+			<key>label</key>
+			<string>24-Hour Time</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>wakeScreen</string>
+			<key>label</key>
+			<string>Auto Wake Screen on Charge + Landscape</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>keepAwake</string>
+			<key>label</key>
+			<string>Keep Screen Awake</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Delay when turning off screen while waiting for StandBy to start</string>
+			<key>label</key>
+			<string>Auto Wake Delay (seconds)</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>1.5</real>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>wakeDelay</string>
+			<key>max</key>
+			<real>5.0</real>
+			<key>min</key>
+			<real>0.5</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Select 'Custom' to use the 3 Hue / Saturation / Brightness sliders. If the switches below are enabled, now playing artwork color and night mode red will take priority.</string>
+			<key>label</key>
+			<string>Clock Color</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>default</key>
+			<integer>0</integer>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>detail</key>
+			<string>PSListItemsController</string>
+			<key>key</key>
+			<string>colorPreset</string>
+			<key>label</key>
+			<string>Clock Color</string>
+			<key>shortTitles</key>
+			<array>
+				<string>Default (different color per style)</string>
+				<string>Pink</string>
+				<string>Blue</string>
+				<string>Purple</string>
+				<string>Orange</string>
+				<string>Green</string>
+				<string>White</string>
+				<string>Yellow</string>
+				<string>Custom (3 sliders below)</string>
+			</array>
+			<key>validTitles</key>
+			<array>
+				<string>Default (different color per style)</string>
+				<string>Pink</string>
+				<string>Blue</string>
+				<string>Purple</string>
+				<string>Orange</string>
+				<string>Green</string>
+				<string>White</string>
+				<string>Yellow</string>
+				<string>Custom (3 sliders below)</string>
+			</array>
+			<key>validValues</key>
+			<array>
+				<integer>0</integer>
+				<integer>1</integer>
+				<integer>2</integer>
+				<integer>3</integer>
+				<integer>4</integer>
+				<integer>5</integer>
+				<integer>6</integer>
+				<integer>7</integer>
+				<integer>8</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>tintArtwork</string>
+			<key>label</key>
+			<string>Match Now Playing Album Artwork Color</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>nightRed</string>
+			<key>label</key>
+			<string>Night Mode</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Hue — only used when 'Custom' is selected</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0.96</real>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>colorH</string>
+			<key>max</key>
+			<real>1.0</real>
+			<key>min</key>
+			<real>0.0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Saturation</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0.53</real>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>colorS</string>
+			<key>max</key>
+			<real>1.0</real>
+			<key>min</key>
+			<real>0.0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Brightness</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0.93</real>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>colorB</string>
+			<key>max</key>
+			<real>1.0</real>
+			<key>min</key>
+			<real>0.0</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Customize the clock photo wallpaper to your preference</string>
+			<key>label</key>
+			<string>Photo Wallpaper Page (Swipe Horizontally)</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>pickPhoto</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Add Wallpaper from Photo Library…</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>photoDot</string>
+			<key>label</key>
+			<string>Time Format with Dot e.g. 19.49 (Off = 19:49)</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>default</key>
+			<string></string>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>captionText</string>
+			<key>label</key>
+			<string>Caption for your photo wallpaper</string>
+			<key>placeholder</key>
+			<string>e.g. My Wallpaper</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Fetched from Open-Meteo by coordinates. Default is HCMC (10.82, 106.63). City name is for display only.</string>
+			<key>label</key>
+			<string>Weather (Style 3: Photo + Temperature)</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>default</key>
+			<string>TP. Hồ Chí Minh</string>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>weatherCity</string>
+			<key>label</key>
+			<string>City Name</string>
+			<key>placeholder</key>
+			<string>Ho Chi Minh City</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>default</key>
+			<string>10.82</string>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>weatherLat</string>
+			<key>keyboard</key>
+			<string>NumbersAndPunctuation</string>
+			<key>label</key>
+			<string>Latitude (lat)</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.standby.ios16/reload</string>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>default</key>
+			<string>106.63</string>
+			<key>defaults</key>
+			<string>com.standby.ios16</string>
+			<key>key</key>
+			<string>weatherLon</string>
+			<key>keyboard</key>
+			<string>NumbersAndPunctuation</string>
+			<key>label</key>
+			<string>Longitude (lon)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Donate to keep me motivated, thank you everyone! ☕️❤️</string>
+			<key>label</key>
+			<string>Support (Donate)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Bank: VietinBank</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Account Number: 100888241596</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Recipient: Hoang Duc Luong</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>PhucStandby</string>
+</dict>
+</plist>

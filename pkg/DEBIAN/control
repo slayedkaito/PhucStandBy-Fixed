@@ -1,0 +1,10 @@
+Package: com.phucbakhi.phucstandby
+Name: PhucStandBy  
+Depends: mobilesubstrate, preferenceloader
+Description: Bring the iOS 17 StandBy experience to iOS 16 and older devices (Supports English, Indonesian, and Vietnamese)
+Maintainer: amiaxf
+Author: tranhoangphuc
+Section: Tweaks
+Architecture: iphoneos-arm64
+Version: 2.0.26-2
+Installed-Size: 1168
