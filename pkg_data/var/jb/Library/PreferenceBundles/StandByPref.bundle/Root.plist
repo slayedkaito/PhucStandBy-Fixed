@@ -50,7 +50,7 @@ Changes take effect immediately, no respring required.</string>
 			<key>cell</key>
 			<string>PSSwitchCell</string>
 			<key>default</key>
-			<true/>
+			<false/>
 			<key>defaults</key>
 			<string>com.standby.ios16</string>
 			<key>key</key>
@@ -385,6 +385,53 @@ Changes take effect immediately, no respring required.</string>
 			<string>PSStaticTextCell</string>
 			<key>label</key>
 			<string>Recipient: Hoang Duc Luong</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Respring to apply all changes cleanly.</string>
+			<key>label</key>
+			<string>Actions</string>
+		</dict>
+		<dict>
+			<key>action</key>
+			<string>respring:</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>confirmation</key>
+			<dict>
+				<key>cancelTitle</key>
+				<string>Cancel</string>
+				<key>okTitle</key>
+				<string>Respring</string>
+				<key>prompt</key>
+				<string>Are you sure you want to respring?</string>
+				<key>title</key>
+				<string>Respring</string>
+			</dict>
+			<key>label</key>
+			<string>Respring SpringBoard</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>PhucStandBy Fixed &amp; Maintained by amiaxf</string>
+			<key>label</key>
+			<string>Credits</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Original Developer: tranhoangphuc (PhucBakhi)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSStaticTextCell</string>
+			<key>label</key>
+			<string>Maintainer &amp; Fixes: amiaxf</string>
 		</dict>
 	</array>
 	<key>title</key>

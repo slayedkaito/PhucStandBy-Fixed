@@ -24,13 +24,21 @@ An optimized, multilingual edition of the iOS 17 StandBy mode tweak for iOS 16 (
    * Fixed a fatal crash (`EXC_BAD_ACCESS` / Safe Mode) occurring when swiping widgets horizontally or vertically.
    * Weather format strings (`%d°C`, `%ld°`, `C:%ld° T:%ld°`, `C:--° T:--°`, `• `, `H:%ld° L:%ld°`) are strictly preserved in their original memory slots.
 
-4. **Infinite Wake Loop & Black Lockscreen Fix**:
-   * Fixed a logic flaw in `updateWakeLogic:` where the screen continuously turned itself back on every 1.5 seconds after being manually put to sleep on the charger.
-   * Fixed the resulting pitch-black lockscreen glitch caused by programmatic wake.
+4. **Auto Wake Screen on Charge Restored & Fixed**:
+   * Restored the **"Auto Wake Screen on Charge + Landscape"** feature with its delay slider, set to **OFF by default** to give users full control.
+   * Completely eliminated the **infinite wake loop bug**: when manually locking the device while charging in landscape, the screen stays off cleanly until undocked or replugged.
+   * Fixed the **pitch-black lockscreen wallpaper bug** by routing backlight wake through button wake events (`SBBacklightSourceButton`) and using transparent window clearing (`clearColor`).
 
-5. **100% Rootless & Sileo Native Compatibility**:
+5. **Widget Swipe Stuck Bug Fix**:
+   * Fixed an issue where swiping between widgets in StandBy mode would permanently freeze or get stuck when gestures were cancelled or started near the page indicator pill.
+
+6. **In-Settings Respring & Credits**:
+   * Added a native **"Respring SpringBoard"** button at the bottom of the Settings page (`StandByPref.bundle`) with a confirmation dialog, safely invoking `sys_exit(0)` via Darwin notifications without breaking ARM64E PAC.
+   * Added official **Credits** section inside Settings acknowledging Original Developer **tranhoangphuc (PhucBakhi)** and Maintainer **amiaxf**.
+
+7. **100% Rootless & Sileo Native Compatibility**:
    * Packaged with standalone LZMA stream format (`0x5d`) resolving `lzma error: file format not recognized` in RootHide Patcher / Sileo.
-   * Re-signed SHA-256 Mach-O `CodeDirectory` hashes for both ARM64 and ARM64E (PAC/Dopamine) slices with 0 mismatches.
+   * Re-signed SHA-256 Mach-O `CodeDirectory` hashes for both ARM64 and ARM64E (PAC/Dopamine) slices on both `StandBy.dylib` and `StandByPref` with 0 mismatches.
 
 ---
 
