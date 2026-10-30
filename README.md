@@ -11,11 +11,11 @@ An optimized, multilingual edition of the iOS 17 StandBy mode tweak for iOS 16 (
 
 ## ✨ Improvements in this Edition (v2.0.26-2)
 
-1. **Dynamic Language Selector & Multilingual Engine**:
-   * **In-Settings Language Selector**: Added a dedicated **Language** setting in the tweak preferences with options: **Auto (System Language)**, **English**, **Bahasa Indonesia**, and **Tiếng Việt**.
-   * **Synchronized Mode & Settings**: Both the Settings pane and the StandBy mode overlay adapt dynamically to the chosen language.
-   * When set to **Auto**, StandBy mode automatically matches your device system language (English on English iPhones, Indonesian on Indonesian iPhones), completely eliminating the mixed-language issue.
-   * Built with a zero-overhead, 100% crash-proof memory switching engine that preserves all format specifiers and never triggers Safe Mode.
+1. **Multilingual Architecture & Clean English Default**:
+   * **Clean English StandBy Mode**: The default package provides a pure, native English interface on the StandBy screen (`Battery`, `Charging`, `Now Playing`, `Paused`, `SUNDAY`, `DAY %ld`, `Today`, `Your day is clear`, etc.), eliminating the mixed language issue on English devices.
+   * **System-Adaptive Settings**: Tweak preferences in Settings (`StandByPref.bundle`) feature full native localizations (`en.lproj`, `id.lproj`, `vi.lproj`) that automatically adapt to your iOS system language.
+   * **Dedicated Language Editions**: Separate `.deb` packages for Indonesian (`..._id.deb`) and Vietnamese (`..._vi.deb`) StandBy UI overlays are available in Releases for users who prefer their native language on the StandBy screen.
+   * **100% Crash-Proof**: Built with strict PAC and dyld chained fixups compatibility on ARM64E / iOS 16 Dopamine to ensure zero risk of Safe Mode.
    * Cleaned offensive placeholder strings in settings to standard examples (`e.g. My Wallpaper` / `cth. Wallpaper Saya`).
 
 2. **Lockscreen-Only Activation (`shouldShow` Patch)**:

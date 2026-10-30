@@ -13,7 +13,7 @@ WORK_DIR = r"C:\Users\AmiaXf\.gemini\antigravity\scratch\phucstandby"
 PKG_DATA = os.path.join(WORK_DIR, "pkg_data")
 PREF_BUNDLE = os.path.join(PKG_DATA, "var", "jb", "Library", "PreferenceBundles", "StandByPref.bundle")
 
-# Translations mapping:
+# Translations mapping for Preference Bundle:
 # Each entry is (English_Key, Vietnamese_Key, English_Val, Indonesian_Val, Vietnamese_Val)
 TRANSLATIONS = [
     # Top-level Title
@@ -105,97 +105,78 @@ TRANSLATIONS = [
         "Hue — only used when 'Custom' is selected",
         "Hue (sắc độ) — chỉ dùng khi chọn 'Tuỳ chỉnh'",
         "Hue — only used when 'Custom' is selected",
-        "Hue (Corak) — hanya digunakan saat memilih 'Kustom'",
+        "Hue (corak) — hanya digunakan saat 'Kustom' dipilih",
         "Hue (sắc độ) — chỉ dùng khi chọn 'Tuỳ chỉnh'"
     ),
-    ("Saturation", "Saturation (độ đậm)", "Saturation", "Saturasi (Kepekatan)", "Saturation (độ đậm)"),
-    ("Brightness", "Brightness (độ sáng)", "Brightness", "Kecerahan", "Brightness (độ sáng)"),
+    ("Hue", "Hue", "Hue", "Hue", "Hue"),
+    ("Saturation", "Độ bão hòa", "Saturation", "Saturasi", "Độ bão hòa"),
+    ("Brightness", "Độ sáng", "Brightness", "Kecerahan", "Độ sáng"),
 
-    # Photo Page Group
+    # Music Wave Color Group
+    ("Music Wave Color", "Màu sóng nhạc", "Music Wave Color", "Warna Gelombang Musik", "Màu sóng nhạc"),
     (
-        "Photo Wallpaper Page (Swipe Horizontally)",
-        "Trang ảnh nền (vuốt ngang)",
-        "Photo Wallpaper Page (Swipe Horizontally)",
-        "Halaman Wallpaper Foto (Geser Horizontal)",
-        "Trang ảnh nền (vuốt ngang)"
-    ),
-    (
-        "Customize the clock photo wallpaper to your preference",
-        "Tuỳ chỉnh ảnh nền cho khung giờ theo ý cúa bạn",
-        "Customize the clock photo wallpaper to your preference",
-        "Sesuaikan wallpaper foto untuk tampilan jam sesuai keinginan Anda",
-        "Tuỳ chỉnh ảnh nền cho khung giờ theo ý cúa bạn"
-    ),
-    (
-        "Add Wallpaper from Photo Library…",
-        "Thêm ảnh nền từ Thư viện ảnh…",
-        "Add Wallpaper from Photo Library…",
-        "Tambah Wallpaper dari Galeri Foto…",
-        "Thêm ảnh nền từ Thư viện ảnh…"
-    ),
-    (
-        "Time Format with Dot e.g. 19.49 (Off = 19:49)",
-        "Giờ dạng 19.49 (tắt = 19:49)",
-        "Time Format with Dot e.g. 19.49 (Off = 19:49)",
-        "Format Jam Titik cth. 19.49 (Mati = 19:49)",
-        "Giờ dạng 19.49 (tắt = 19:49)"
-    ),
-    (
-        "Caption for your photo wallpaper",
-        "Chú thích cho ảnh nền bạn muốn đặt",
-        "Caption for your photo wallpaper",
-        "Keterangan untuk wallpaper foto Anda",
-        "Chú thích cho ảnh nền bạn muốn đặt"
-    ),
-    ("e.g. My Wallpaper", "vd: hoangluongnigger", "e.g. My Wallpaper", "cth. Wallpaper Saya", "vd: Hoang Luong"),
-
-    # Weather Group
-    (
-        "Weather (Style 3: Photo + Temperature)",
-        "Thời tiết (kiểu 3: ảnh + nhiệt độ)",
-        "Weather (Style 3: Photo + Temperature)",
-        "Cuaca (Gaya 3: Foto + Suhu)",
-        "Thời tiết (kiểu 3: ảnh + nhiệt độ)"
-    ),
-    (
-        "Fetched from Open-Meteo by coordinates. Default is HCMC (10.82, 106.63). City name is for display only.",
-        "Lấy từ Open-Meteo theo toạ độ. Mặc định TP.HCM (10.82, 106.63). Tên thành phố chỉ để hiển thị.",
-        "Fetched from Open-Meteo by coordinates. Default is HCMC (10.82, 106.63). City name is for display only.",
-        "Diambil dari Open-Meteo berdasarkan koordinat. Default: TP.HCM (10.82, 106.63). Nama kota hanya untuk tampilan.",
-        "Lấy từ Open-Meteo theo toạ độ. Mặc định TP.HCM (10.82, 106.63). Tên thành phố chỉ để hiển thị."
-    ),
-    ("City Name", "Tên thành phố", "City Name", "Nama Kota", "Tên thành phố"),
-    ("Ho Chi Minh City", "TP. Hồ Chí Minh", "Ho Chi Minh City", "Kota Ho Chi Minh", "TP. Hồ Chí Minh"),
-    ("Latitude (lat)", "Vĩ độ (lat)", "Latitude (lat)", "Lintang (lat)", "Vĩ độ (lat)"),
-    ("Longitude (lon)", "Kinh độ (lon)", "Longitude (lon)", "Bujur (lon)", "Kinh độ (lon)"),
-
-    # Donate Group
-    ("Support (Donate)", "Ủng hộ (Donate)", "Support (Donate)", "Dukungan (Donasi)", "Ủng hộ (Donate)"),
-    (
-        "Donate to keep me motivated, thank you everyone! ☕️❤️",
-        "Donate để tui có động lực nhá thank kiuu mn☕️❤️",
-        "Donate to keep me motivated, thank you everyone! ☕️❤️",
-        "Donasi agar saya tetap termotivasi, terima kasih semuanya! ☕️❤️",
-        "Donate để tui có động lực nhá thank kiuu mn☕️❤️"
-    ),
-    ("Bank: VietinBank", "Ngân hàng: VietinBank", "Bank: VietinBank", "Bank: VietinBank", "Ngân hàng: VietinBank"),
-    (
-        "Account Number: 100888241596",
-        "Số tài khoản: 100888241596",
-        "Account Number: 100888241596",
-        "Nomor Rekening: 100888241596",
-        "Số tài khoản: 100888241596"
-    ),
-    (
-        "Recipient: Hoang Duc Luong",
-        "Người nhận: Hoang Duc Luong",
-        "Recipient: Hoang Duc Luong",
-        "Penerima: Hoang Duc Luong",
-        "Người nhận: Hoang Duc Luong"
+        "Color of the audio waveform visualizer when music is playing. If 'Match Album Artwork' above is enabled, it takes priority.",
+        "Màu của sóng nhạc động khi đang phát nhạc. Nếu bật 'Đổi màu theo bìa nhạc' ở trên thì màu bìa vẫn được ưu tiên.",
+        "Color of the audio waveform visualizer when music is playing. If 'Match Album Artwork' above is enabled, it takes priority.",
+        "Warna visualizer gelombang audio saat musik diputar. Jika 'Sesuaikan Warna Sampul Album' di atas aktif, warna sampul tetap diprioritaskan.",
+        "Màu của sóng nhạc động khi đang phát nhạc. Nếu bật 'Đổi màu theo bìa nhạc' ở trên thì màu bìa vẫn được ưu tiên."
     ),
 
-    # Actions / Respring
-    ("Actions", "Thao tác", "Actions", "Aksi", "Thao tác"),
+    # Photo Page Settings
+    ("Photo Page Settings", "Cài đặt trang ảnh nền", "Photo Page Settings", "Pengaturan Halaman Foto", "Cài đặt trang ảnh nền"),
+    (
+        "Hide bottom-right clock on photo page",
+        "Ẩn đồng hồ nhỏ góc phải ở trang ảnh",
+        "Hide bottom-right clock on photo page",
+        "Sembunyikan jam kecil di sudut kanan halaman foto",
+        "Ẩn đồng hồ nhỏ góc phải ở trang ảnh"
+    ),
+    ("Dim Photo Wallpaper", "Làm tối ảnh nền", "Dim Photo Wallpaper", "Redupkan Wallpaper Foto", "Làm tối ảnh nền"),
+    (
+        "Custom Album Name",
+        "Tên album ảnh tuỳ chỉnh",
+        "Custom Album Name",
+        "Nama Album Foto Kustom",
+        "Tên album ảnh tuỳ chỉnh"
+    ),
+    (
+        "Name of the Photos album to pull wallpaper photos from. Leave blank to show recently added photos (up to 20).",
+        "Tên album trong ứng dụng Ảnh để lấy hình nền. Để trống sẽ hiện ảnh mới thêm gần đây (tối đa 20 ảnh).",
+        "Name of the Photos album to pull wallpaper photos from. Leave blank to show recently added photos (up to 20).",
+        "Nama album di aplikasi Foto untuk mengambil wallpaper. Biarkan kosong untuk menampilkan foto terbaru (hingga 20 foto).",
+        "Tên album trong ứng dụng Ảnh để lấy hình nền. Để trống sẽ hiện ảnh mới thêm gần đây (tối đa 20 ảnh)."
+    ),
+    ("Pick Photos from Album", "Chọn ảnh trong album", "Pick Photos from Album", "Pilih Foto dari Album", "Chọn ảnh trong album"),
+    (
+        "Tap to open album picker. StandBy must have Photos permission.",
+        "Chạm để mở chọn ảnh. Cần cấp quyền truy cập Ảnh cho StandBy.",
+        "Tap to open album picker. StandBy must have Photos permission.",
+        "Ketuk untuk membuka pemilih album. StandBy memerlukan izin akses Foto.",
+        "Chạm để mở chọn ảnh. Cần cấp quyền truy cập Ảnh cho StandBy."
+    ),
+
+    # Custom Font
+    ("Custom Font", "Phông chữ tuỳ chỉnh", "Custom Font", "Font Kustom", "Phông chữ tuỳ chỉnh"),
+    (
+        "Enter PostScript name of installed custom font. Leave blank to use system font.",
+        "Nhập tên PostScript của font chữ đã cài. Để trống để dùng font hệ thống.",
+        "Enter PostScript name of installed custom font. Leave blank to use system font.",
+        "Masukkan nama PostScript dari font yang terpasang. Biarkan kosong untuk menggunakan font sistem.",
+        "Nhập tên PostScript của font chữ đã cài. Để trống để dùng font hệ thống."
+    ),
+
+    # Reset
+    ("Reset All Settings to Default", "Đặt lại toàn bộ về mặc định", "Reset All Settings to Default", "Reset Semua Pengaturan ke Default", "Đặt lại toàn bộ về mặc định"),
+    (
+        "Reset all settings back to default values.",
+        "Khôi phục toàn bộ cài đặt về trạng thái ban đầu.",
+        "Reset all settings back to default values.",
+        "Kembalikan semua pengaturan ke nilai default awal.",
+        "Khôi phục toàn bộ cài đặt về trạng thái ban đầu."
+    ),
+
+    # Actions & Respring
+    ("Actions", "Thao tác", "Actions", "Tindakan", "Thao tác"),
     (
         "Respring to apply all changes cleanly.",
         "Respring để áp dụng sạch mọi thay đổi.",
@@ -214,21 +195,14 @@ TRANSLATIONS = [
     ("Respring", "Respring", "Respring", "Respring", "Respring"),
     ("Cancel", "Hủy", "Cancel", "Batal", "Hủy"),
 
-    # Language Selection Group
+    # Language Info Group
     ("Language", "Ngôn ngữ", "Language", "Bahasa", "Ngôn ngữ"),
     (
-        "Select language for StandBy mode and settings. 'Auto' follows your device system language.",
-        "Chọn ngôn ngữ cho chế độ StandBy và Cài đặt. 'Tự động' sẽ theo ngôn ngữ hệ thống.",
-        "Select language for StandBy mode and settings. 'Auto' follows your device system language.",
-        "Pilih bahasa untuk mode StandBy dan Pengaturan. 'Otomatis' mengikuti bahasa sistem perangkat Anda.",
-        "Chọn ngôn ngữ cho chế độ StandBy và Cài đặt. 'Tự động' sẽ theo ngôn ngữ hệ thống."
-    ),
-    (
-        "Auto (System Language)",
-        "Tự động (Theo hệ thống)",
-        "Auto (System Language)",
-        "Otomatis (Bahasa Sistem)",
-        "Tự động (Theo hệ thống)"
+        "StandBy tweak preferences automatically follow your iOS system language (English, Indonesian, Vietnamese).",
+        "Cài đặt tinh chỉnh StandBy tự động theo ngôn ngữ hệ thống iOS của bạn (Tiếng Anh, Tiếng Việt, Indonesia).",
+        "StandBy tweak preferences automatically follow your iOS system language (English, Indonesian, Vietnamese).",
+        "Pengaturan tweak StandBy secara otomatis mengikuti bahasa sistem iOS Anda (Inggris, Indonesia, Vietnam).",
+        "Cài đặt tinh chỉnh StandBy tự động theo ngôn ngữ hệ thống iOS của bạn (Tiếng Anh, Tiếng Việt, Indonesia)."
     ),
 
     # Credits
@@ -259,89 +233,220 @@ TRANSLATIONS = [
 def escape_apple_string(s):
     res = []
     for c in s:
-        if c == '\\':
-            res.append('\\\\')
-        elif c == '"':
-            res.append('\\"')
+        if c == '"':
+            res.append(r'\"')
+        elif c == '\\':
+            res.append(r'\\')
         elif c == '\n':
-            res.append('\\n')
+            res.append(r'\n')
         elif c == '\r':
-            res.append('\\r')
+            res.append(r'\r')
         elif c == '\t':
-            res.append('\\t')
+            res.append(r'\t')
         else:
             res.append(c)
     return "".join(res)
 
-def generate_strings_content(lang_index, header_title):
+def generate_strings_content(lang_idx, lang_name):
+    # lang_idx: 0 for EN, 1 for ID, 2 for VI
+    val_idx = 2 + lang_idx
     lines = [
-        f"/* Root.strings ({header_title}) */",
-        "/* Generated with English and Indonesian language support */",
+        f"/* Root.strings ({lang_name}) */",
+        f"/* Generated with English and Indonesian language support */",
         ""
     ]
-    seen = set()
-    for en_key, vi_key, en_val, id_val, vi_val in TRANSLATIONS:
-        val = [en_val, id_val, vi_val][lang_index]
+    seen_keys = set()
+    for entry in TRANSLATIONS:
+        en_key = entry[0]
+        vi_key = entry[1]
+        val = entry[val_idx]
         
-        # Include mapping for English key
-        if en_key and (en_key, val) not in seen:
-            seen.add((en_key, val))
+        # Add mapping for en_key -> val
+        if en_key and en_key not in seen_keys:
             lines.append(f'"{escape_apple_string(en_key)}" = "{escape_apple_string(val)}";')
-        
-        # Include mapping for Vietnamese key
-        if vi_key and vi_key != en_key and (vi_key, val) not in seen:
-            seen.add((vi_key, val))
+            seen_keys.add(en_key)
+            
+        # Add mapping for vi_key -> val (if different)
+        if vi_key and vi_key not in seen_keys:
             lines.append(f'"{escape_apple_string(vi_key)}" = "{escape_apple_string(val)}";')
+            seen_keys.add(vi_key)
             
     lines.append("")
     return "\n".join(lines)
+
+# Translations for StandBy overlay CFStrings
+DYLIB_STRINGS = {
+    "en": [
+        (81, "Now Playing"),
+        (109, "SUNDAY"),
+        (110, "DAY %ld"),
+        (124, "Sunday"),
+        (125, "Day %ld"),
+        (126, "%@, %ld/%ld"),
+        (127, "%lu events today"),
+        (128, "Your day is clear"),
+        (129, "Today"),
+        (130, "Cannot read calendar"),
+        (132, "No music\nplaying"),
+        (133, "Paused"),
+        (140, "No new\nnotifications"),
+        (141, "Recent"),
+        (143, "Charging"),
+        (144, "Battery"),
+        (156, "Add photos to ")
+    ],
+    "id": [
+        (81, "Sedang diputar"),
+        (109, "MINGGU"),
+        (110, "HARI %ld"),
+        (124, "Minggu"),
+        (125, "Hari %ld"),
+        (126, "%@, %ld/%ld"),
+        (127, "%lu acara hari ini"),
+        (128, "Tidak ada acara"),
+        (129, "Hari ini"),
+        (130, "Gagal membaca kalender"),
+        (132, "Tidak ada musik\nyang diputar"),
+        (133, "Dijeda"),
+        (140, "Tidak ada\npemberitahuan"),
+        (141, "Terbaru"),
+        (143, "Mengisi daya"),
+        (144, "Baterai"),
+        (156, "Tambahkan foto di ")
+    ],
+    "vi": [
+        (81, "Đang phát"),
+        (109, "CHỦ NHẬT"),
+        (110, "NGÀY %ld"),
+        (124, "Chủ nhật"),
+        (125, "Ngày %ld"),
+        (126, "%@, %ld/%ld"),
+        (127, "%lu sự kiện hôm nay"),
+        (128, "Ngày của bạn trống"),
+        (129, "Hôm nay"),
+        (130, "Không thể đọc lịch"),
+        (132, "Không có nhạc\nđang phát"),
+        (133, "Đã tạm dừng"),
+        (140, "Không có\nthông báo mới"),
+        (141, "Gần đây"),
+        (143, "Đang sạc"),
+        (144, "Pin"),
+        (156, "Thêm ảnh vào ")
+    ]
+}
+
+def apply_standby_strings(data, translations):
+    NOP_INSN = bytes([0x1f, 0x20, 0x03, 0xd5])
+    # 1. Arch 0 (arm64, offset 0x4000)
+    arch0_target = 0x4000 + 0xc7f4
+    data[arch0_target:arch0_target+4] = NOP_INSN
+    
+    curr_vm_0 = 0x3e6ee
+    cf_base_0 = 0x44730
+    for idx, text in translations:
+        utf16_bytes = text.encode("utf-16le")
+        abs_off_0 = 0x4000 + curr_vm_0
+        data[abs_off_0:abs_off_0 + len(utf16_bytes)] = utf16_bytes
+
+        cf_entry_off = 0x4000 + cf_base_0 + idx * 32
+        isa = struct.unpack('<Q', data[cf_entry_off:cf_entry_off+8])[0]
+        new_entry = struct.pack('<QQQQ', isa, 0x7d0, curr_vm_0, len(text))
+        data[cf_entry_off:cf_entry_off+32] = new_entry
+        curr_vm_0 += len(utf16_bytes)
+
+    # 2. Arch 1 (arm64e, offset 0x7c000)
+    arch1_target = 0x7c000 + 0xbff4
+    data[arch1_target:arch1_target+4] = NOP_INSN
+
+    curr_vm_1 = 0x3e6f6
+    cf_base_1 = 0x44a08
+    for idx, text in translations:
+        utf16_bytes = text.encode("utf-16le")
+        abs_off_1 = 0x7c000 + curr_vm_1
+        data[abs_off_1:abs_off_1 + len(utf16_bytes)] = utf16_bytes
+
+        cf_entry_off = 0x7c000 + cf_base_1 + idx * 32
+        isa = struct.unpack('<Q', data[cf_entry_off:cf_entry_off+8])[0]
+        str_ptr_1 = 0x1000000000000000 | curr_vm_1
+        new_entry = struct.pack('<QQQQ', isa, 0x7d0, str_ptr_1, len(text))
+        data[cf_entry_off:cf_entry_off+32] = new_entry
+        curr_vm_1 += len(utf16_bytes)
+
+    # 3. Re-sign CodeDirectory SHA-256 hashes
+    arches = [
+        (0, 0x4000, 487968),
+        (1, 0x7c000, 486416)
+    ]
+    for arch_idx, arch_off, arch_size in arches:
+        arch_data = data[arch_off:arch_off+arch_size]
+        ncmds, sizeofcmds = struct.unpack('<II', arch_data[16:24])
+        offset = 32
+        cs_dataoff = None
+        for _ in range(ncmds):
+            cmd, cmdsize = struct.unpack('<II', arch_data[offset:offset+8])
+            if cmd == 0x1d:
+                cs_dataoff, cs_datasize = struct.unpack('<II', arch_data[offset+8:offset+16])
+                break
+            offset += cmdsize
+
+        superblob_off = arch_off + cs_dataoff
+        slot_type, slot_off = struct.unpack('>II', data[superblob_off+12:superblob_off+20])
+        cd_abs_off = superblob_off + slot_off
+        magic, length, ver, flags, hashoff, identoff, nspecial, ncode, codelimit, hashsize, hashtype, platform, pageshift = struct.unpack('>IIIIIIIIIBBBB', data[cd_abs_off:cd_abs_off+40])
+        page_size = 1 << pageshift
+
+        for p in range(ncode):
+            p_start = arch_off + p * page_size
+            p_end = arch_off + min((p + 1) * page_size, codelimit)
+            h = hashlib.sha256(data[p_start:p_end]).digest()
+            h_dest = cd_abs_off + hashoff + p * hashsize
+            data[h_dest:h_dest+hashsize] = h
+
+    return data
 
 def resign_macho(file_path):
     with open(file_path, 'rb') as f:
         data = bytearray(f.read())
 
-    magic = struct.unpack('>I', data[:4])[0]
-    slices = []
-    if magic in [0xcafebabe, 0xbebafeca]:
-        nfat = struct.unpack('>I', data[4:8])[0]
-        for i in range(nfat):
-            cputype, cpusub, offset, size, align = struct.unpack('>IIIII', data[8+i*20:28+i*20])
-            slices.append((offset, size))
+    magic = struct.unpack('<I', data[:4])[0]
+    fat_magic = 0xbebafeca
+    if magic != fat_magic:
+        arches = [(0, 0, len(data))]
     else:
-        slices.append((0, len(data)))
+        nfat_arch = struct.unpack('>I', data[4:8])[0]
+        arches = []
+        for i in range(nfat_arch):
+            cputype, cpusubtype, offset, size, align = struct.unpack('>IIIII', data[8 + i*20 : 8 + (i+1)*20])
+            arches.append((i, offset, size))
 
     total_mismatches = 0
-    for idx, (arch_off, arch_size) in enumerate(slices):
+    for arch_idx, arch_off, arch_size in arches:
         arch_data = data[arch_off:arch_off+arch_size]
         ncmds, sizeofcmds = struct.unpack('<II', arch_data[16:24])
-        cmd_off = 32
+        offset = 32
         cs_dataoff = None
         for _ in range(ncmds):
-            cmd, cmdsize = struct.unpack('<II', arch_data[cmd_off:cmd_off+8])
+            cmd, cmdsize = struct.unpack('<II', arch_data[offset:offset+8])
             if cmd == 0x1d:
-                cs_dataoff, cs_datasize = struct.unpack('<II', arch_data[cmd_off+8:cmd_off+16])
+                cs_dataoff, cs_datasize = struct.unpack('<II', arch_data[offset+8:offset+16])
                 break
-            cmd_off += cmdsize
+            offset += cmdsize
 
-        if cs_dataoff is None:
+        if not cs_dataoff:
             continue
 
         superblob_off = arch_off + cs_dataoff
         slot_type, slot_off = struct.unpack('>II', data[superblob_off+12:superblob_off+20])
         cd_abs_off = superblob_off + slot_off
-
-        magic_cd, length, ver, flags, hashoff, identoff, nspecial, ncode, codelimit, hashsize, hashtype, platform, pageshift = struct.unpack('>IIIIIIIIIBBBB', data[cd_abs_off:cd_abs_off+40])
+        magic, length, ver, flags, hashoff, identoff, nspecial, ncode, codelimit, hashsize, hashtype, platform, pageshift = struct.unpack('>IIIIIIIIIBBBB', data[cd_abs_off:cd_abs_off+40])
         page_size = 1 << pageshift
-        
+
         for p in range(ncode):
             p_start = arch_off + p * page_size
             p_end = arch_off + min((p + 1) * page_size, codelimit)
-            page_data = data[p_start:p_end]
-            h = hashlib.sha256(page_data).digest()
-
+            h = hashlib.sha256(data[p_start:p_end]).digest()
             h_dest = cd_abs_off + hashoff + p * hashsize
-            old_h = data[h_dest:h_dest+hashsize]
-            if h != old_h:
+            if data[h_dest:h_dest+hashsize] != h:
                 total_mismatches += 1
                 data[h_dest:h_dest+hashsize] = h
 
@@ -349,16 +454,7 @@ def resign_macho(file_path):
         f.write(data)
     print(f"Resigned {os.path.basename(file_path)}: {total_mismatches} mismatches corrected")
 
-def build():
-    # 0. Apply dynamic multilingual engine and resign binaries
-    import patch_multilingual_engine
-    patch_multilingual_engine.patch_multilingual()
-
-    dylib_path = os.path.join(PKG_DATA, "var", "jb", "Library", "MobileSubstrate", "DynamicLibraries", "StandBy.dylib")
-    pref_bin_path = os.path.join(PREF_BUNDLE, "StandByPref")
-    resign_macho(dylib_path)
-    resign_macho(pref_bin_path)
-
+def prepare_settings_bundle():
     # 1. Create lproj directories
     lprojs = {
         "en": (0, "English"),
@@ -400,7 +496,7 @@ def build():
     with open(root_plist_path, "rb") as f:
         root_pl = plistlib.load(f)
 
-    # Let's create a lookup mapping Vietnamese text -> English text
+    # Mapping Vietnamese text -> English text
     vi_to_en = {}
     for en_k, vi_k, en_v, id_v, vi_v in TRANSLATIONS:
         vi_to_en[vi_k] = en_v
@@ -422,54 +518,27 @@ def build():
         if "shortTitles" in item:
             item["shortTitles"] = [vi_to_en.get(t, t) for t in item["shortTitles"]]
 
-    # Check if Language setting cell already exists
-    has_lang = any(it.get("key") == "language" for it in root_pl["items"])
-    if not has_lang:
-        enabled_idx = 1
-        for idx, it in enumerate(root_pl["items"]):
-            if it.get("key") == "enabled":
-                enabled_idx = idx
-                break
+    # Remove any old language link list or group
+    root_pl["items"] = [it for it in root_pl["items"] if it.get("key") != "language"]
+    root_pl["items"] = [it for it in root_pl["items"] if not (it.get("cell") == "PSGroupCell" and it.get("label") in ["Language", "Ngôn ngữ", "Bahasa"])]
 
-        lang_group = {
-            "cell": "PSGroupCell",
-            "label": "Language",
-            "footerText": "Select language for StandBy mode and settings. 'Auto' follows your device system language."
-        }
-        lang_cell = {
-            "PostNotification": "com.standby.ios16/reload",
-            "cell": "PSLinkListCell",
-            "default": 0,
-            "defaults": "com.standby.ios16",
-            "detail": "PSListItemsController",
-            "key": "language",
-            "label": "Language",
-            "shortTitles": [
-                "Auto (System Language)",
-                "English",
-                "Bahasa Indonesia",
-                "Tiếng Việt"
-            ],
-            "validTitles": [
-                "Auto (System Language)",
-                "English",
-                "Bahasa Indonesia",
-                "Tiếng Việt"
-            ],
-            "validValues": [
-                0,
-                1,
-                2,
-                3
-            ]
-        }
-        root_pl["items"].insert(enabled_idx + 1, lang_group)
-        root_pl["items"].insert(enabled_idx + 2, lang_cell)
+    # Insert clean Language info group
+    enabled_idx = 1
+    for idx, it in enumerate(root_pl["items"]):
+        if it.get("key") == "enabled":
+            enabled_idx = idx
+            break
+
+    lang_group = {
+        "cell": "PSGroupCell",
+        "label": "Language",
+        "footerText": "StandBy tweak preferences automatically follow your iOS system language (English, Indonesian, Vietnamese)."
+    }
+    root_pl["items"].insert(enabled_idx + 1, lang_group)
 
     # Check if Respring and Credits cells already exist
     existing_actions = [it for it in root_pl["items"] if it.get("action") == "respring:"]
     if not existing_actions:
-        # Add Actions & Respring
         root_pl["items"].append({
             "cell": "PSGroupCell",
             "label": "Actions",
@@ -486,7 +555,6 @@ def build():
                 "cancelTitle": "Cancel"
             }
         })
-        # Add Credits
         root_pl["items"].append({
             "cell": "PSGroupCell",
             "label": "Credits",
@@ -503,9 +571,13 @@ def build():
 
     with open(root_plist_path, "wb") as f:
         plistlib.dump(root_pl, f, fmt=plistlib.FMT_XML)
-    print("Updated Root.plist with wakeScreen default OFF, Respring button, and Credits")
+    print("Updated Root.plist with wakeScreen default OFF, clean Language info, Respring, and Credits")
 
-    # 4. Update control file
+    # Resign StandByPref binary
+    pref_bin_path = os.path.join(PREF_BUNDLE, "StandByPref")
+    resign_macho(pref_bin_path)
+
+def package_deb(output_filename):
     control_path = os.path.join(WORK_DIR, "pkg", "DEBIAN", "control")
     with open(control_path, "r", encoding="utf-8") as f:
         ctrl_content = f.read()
@@ -522,9 +594,8 @@ def build():
     new_ctrl_content = "\n".join(new_ctrl_lines).strip() + "\n"
     with open(control_path, "w", encoding="utf-8") as f:
         f.write(new_ctrl_content)
-    print("Updated DEBIAN/control description and maintainer")
 
-    # 5. Pack data.tar.lzma and control.tar.gz
+    # Pack data.tar.lzma
     data_tar_buf = io.BytesIO()
     with tarfile.open(fileobj=data_tar_buf, mode="w") as tar:
         for root, dirs, files in os.walk(PKG_DATA):
@@ -565,7 +636,7 @@ def build():
     data_lzma_bytes = lzma.compress(data_tar_bytes, format=lzma.FORMAT_ALONE)
     print(f"Compressed data.tar.lzma: {len(data_lzma_bytes)} bytes")
 
-    # Prepare control.tar.gz
+    # Pack control.tar.gz
     ctrl_tar_buf = io.BytesIO()
     with gzip.GzipFile(fileobj=ctrl_tar_buf, mode="wb", mtime=0) as gz_out:
         with tarfile.open(fileobj=gz_out, mode="w") as tar:
@@ -592,10 +663,8 @@ def build():
             tar.addfile(ti_ctrl, io.BytesIO(ctrl_bytes))
 
     ctrl_gz_bytes = ctrl_tar_buf.getvalue()
-    print(f"Compressed control.tar.gz: {len(ctrl_gz_bytes)} bytes")
 
-    # 6. Create Debian ar archive (.deb)
-    out_deb_path = os.path.join(WORK_DIR, "com.phucbakhi.phucstandby_2.0.26-2_iphoneos-arm64.deb")
+    out_deb_path = os.path.join(WORK_DIR, output_filename)
 
     def make_ar_header(name, size):
         name_field = f"{name:<16}".encode("ascii")
@@ -629,14 +698,47 @@ def build():
         if len(data_lzma_bytes) % 2:
             deb.write(b"\n")
 
-    print(f"Successfully generated new debian package: {out_deb_path} ({os.path.getsize(out_deb_path)} bytes)")
+    print(f"Successfully generated package: {out_deb_path} ({os.path.getsize(out_deb_path)} bytes)")
 
-    # Also copy to Downloads for direct user access
     user_downloads = r"C:\Users\AmiaXf\Downloads"
     if os.path.exists(user_downloads):
-        dl_target = os.path.join(user_downloads, "com.phucbakhi.phucstandby_2.0.26-2_iphoneos-arm64.deb")
+        dl_target = os.path.join(user_downloads, output_filename)
         shutil.copy2(out_deb_path, dl_target)
         print(f"Copied package to user Downloads: {dl_target}")
 
+def build_all():
+    prepare_settings_bundle()
+
+    dylib_path = os.path.join(PKG_DATA, "var", "jb", "Library", "MobileSubstrate", "DynamicLibraries", "StandBy.dylib")
+    # Read the clean baseline dylib (already patched with bug fixes)
+    with open(dylib_path, "rb") as f:
+        clean_dylib_base = bytearray(f.read())
+
+    # 1. Build Indonesian Variant
+    print("\n--- Building Indonesian Variant ---")
+    data_id = bytearray(clean_dylib_base)
+    patched_id = apply_standby_strings(data_id, DYLIB_STRINGS["id"])
+    with open(dylib_path, "wb") as f:
+        f.write(patched_id)
+    package_deb("com.phucbakhi.phucstandby_2.0.26-2_iphoneos-arm64_id.deb")
+
+    # 2. Build Vietnamese Variant
+    print("\n--- Building Vietnamese Variant ---")
+    data_vi = bytearray(clean_dylib_base)
+    patched_vi = apply_standby_strings(data_vi, DYLIB_STRINGS["vi"])
+    with open(dylib_path, "wb") as f:
+        f.write(patched_vi)
+    package_deb("com.phucbakhi.phucstandby_2.0.26-2_iphoneos-arm64_vi.deb")
+
+    # 3. Build English Default Variant (Primary package)
+    print("\n--- Building English Default Variant (Primary) ---")
+    data_en = bytearray(clean_dylib_base)
+    patched_en = apply_standby_strings(data_en, DYLIB_STRINGS["en"])
+    with open(dylib_path, "wb") as f:
+        f.write(patched_en)
+    package_deb("com.phucbakhi.phucstandby_2.0.26-2_iphoneos-arm64.deb")
+
+    print("\n[SUCCESS] All packages built and copied to Downloads successfully!")
+
 if __name__ == "__main__":
-    build()
+    build_all()
