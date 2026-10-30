@@ -12,9 +12,9 @@ import hashlib
 WORK_DIR = r"C:\Users\AmiaXf\.gemini\antigravity\scratch\phucstandby"
 PKG_DATA = os.path.join(WORK_DIR, "pkg_data")
 PREF_BUNDLE = os.path.join(PKG_DATA, "var", "jb", "Library", "PreferenceBundles", "StandByPref.bundle")
+ORIG_DEB = r"C:\Users\AmiaXf\.gemini\antigravity\brain\5165544a-0a52-45bf-8453-b245ab707f42\.user_uploaded\media_1793365283513_053f84f1.deb"
 
 # Translations mapping for Preference Bundle:
-# Each entry is (English_Key, Vietnamese_Key, English_Val, Indonesian_Val, Vietnamese_Val)
 TRANSLATIONS = [
     # Top-level Title
     ("PhucStandby", "PhucStandby", "PhucStandby", "PhucStandby", "PhucStandby"),
@@ -248,7 +248,6 @@ def escape_apple_string(s):
     return "".join(res)
 
 def generate_strings_content(lang_idx, lang_name):
-    # lang_idx: 0 for EN, 1 for ID, 2 for VI
     val_idx = 2 + lang_idx
     lines = [
         f"/* Root.strings ({lang_name}) */",
@@ -261,12 +260,10 @@ def generate_strings_content(lang_idx, lang_name):
         vi_key = entry[1]
         val = entry[val_idx]
         
-        # Add mapping for en_key -> val
         if en_key and en_key not in seen_keys:
             lines.append(f'"{escape_apple_string(en_key)}" = "{escape_apple_string(val)}";')
             seen_keys.add(en_key)
             
-        # Add mapping for vi_key -> val (if different)
         if vi_key and vi_key not in seen_keys:
             lines.append(f'"{escape_apple_string(vi_key)}" = "{escape_apple_string(val)}";')
             seen_keys.add(vi_key)
@@ -274,109 +271,185 @@ def generate_strings_content(lang_idx, lang_name):
     lines.append("")
     return "\n".join(lines)
 
-# Translations for StandBy overlay CFStrings
-DYLIB_STRINGS = {
+# Strict in-place translation tables that preserve weather strings 100%
+SLOT_TRANSLATIONS = {
     "en": [
-        (81, "Now Playing"),
-        (109, "SUNDAY"),
-        (110, "DAY %ld"),
-        (124, "Sunday"),
-        (125, "Day %ld"),
-        (126, "%@, %ld/%ld"),
-        (127, "%lu events today"),
-        (128, "Your day is clear"),
-        (129, "Today"),
-        (130, "Cannot read calendar"),
-        (132, "No music\nplaying"),
-        (133, "Paused"),
-        (140, "No new\nnotifications"),
-        (141, "Recent"),
-        (143, "Charging"),
-        (144, "Battery"),
-        (156, "Add photos to ")
+        (81,  'Playing', False),                  # 7 chars <= 10
+        (109, 'SUNDAY', False),                   # 6 chars <= 9
+        (110, 'DAY %ld', False),                  # 7 chars <= 8
+        (124, 'Sunday', False),                   # 6 chars <= 9
+        (125, 'Day %ld', False),                  # 7 chars <= 8
+        (126, '%@, %ld/%ld', True),               # 11 chars <= 15
+        (127, '%lu events\ntoday', False),        # 16 chars <= 20
+        (128, 'Your day is clear', False),        # 17 chars <= 19
+        (129, 'Today', False),                    # 5 chars <= 8
+        (130, 'Cannot read calendar', False),     # 20 chars <= 27
+        (132, 'No music\nplaying', False),        # 16 chars <= 23
+        (133, 'Paused', False),                   # 6 chars <= 9
+        (140, 'No new\nnotifications', False),    # 21 chars <= 22
+        (141, 'Recent', False),                   # 6 chars <= 8
+        (143, 'Charging', False),                 # 8 chars <= 9
+        (144, 'Bat', True),                       # 3 chars <= 3
+        (156, 'Add photos to ', False)            # 14 chars <= 25
     ],
     "id": [
-        (81, "Sedang diputar"),
-        (109, "MINGGU"),
-        (110, "HARI %ld"),
-        (124, "Minggu"),
-        (125, "Hari %ld"),
-        (126, "%@, %ld/%ld"),
-        (127, "%lu acara hari ini"),
-        (128, "Tidak ada acara"),
-        (129, "Hari ini"),
-        (130, "Gagal membaca kalender"),
-        (132, "Tidak ada musik\nyang diputar"),
-        (133, "Dijeda"),
-        (140, "Tidak ada\npemberitahuan"),
-        (141, "Terbaru"),
-        (143, "Mengisi daya"),
-        (144, "Baterai"),
-        (156, "Tambahkan foto di ")
+        (81,  'Memutar', False),                  # 7 chars <= 10
+        (109, 'MINGGU', False),                   # 6 chars <= 9
+        (110, 'HARI %ld', False),                 # 8 chars <= 8
+        (124, 'Minggu', False),                   # 6 chars <= 9
+        (125, 'Hari %ld', False),                 # 8 chars <= 8
+        (126, '%@, %ld/%ld', True),               # 11 chars <= 15
+        (127, '%lu acara hari ini', False),       # 18 chars <= 20
+        (128, 'Tidak ada acara', False),          # 15 chars <= 19
+        (129, 'Hari ini', False),                 # 8 chars <= 8
+        (130, 'Gagal membaca kalender', False),   # 22 chars <= 27
+        (132, 'Tidak ada musik', False),          # 15 chars <= 23
+        (133, 'Dijeda', False),                   # 6 chars <= 9
+        (140, 'Tidak ada notifikasi', False),     # 20 chars <= 22
+        (141, 'Terbaru', False),                  # 7 chars <= 8
+        (143, 'Isi Daya', False),                 # 8 chars <= 9
+        (144, 'Bat', True),                       # 3 chars <= 3
+        (156, 'Pilih foto ', False)               # 11 chars <= 25
     ],
     "vi": [
-        (81, "Đang phát"),
-        (109, "CHỦ NHẬT"),
-        (110, "NGÀY %ld"),
-        (124, "Chủ nhật"),
-        (125, "Ngày %ld"),
-        (126, "%@, %ld/%ld"),
-        (127, "%lu sự kiện hôm nay"),
-        (128, "Ngày của bạn trống"),
-        (129, "Hôm nay"),
-        (130, "Không thể đọc lịch"),
-        (132, "Không có nhạc\nđang phát"),
-        (133, "Đã tạm dừng"),
-        (140, "Không có\nthông báo mới"),
-        (141, "Gần đây"),
-        (143, "Đang sạc"),
-        (144, "Pin"),
-        (156, "Thêm ảnh vào ")
+        (81,  'Đang phát', False),
+        (109, 'CHỦ NHẬT', False),
+        (110, 'THỨ %ld', False),
+        (124, 'Chủ nhật', False),
+        (125, 'Thứ %ld', False),
+        (126, '%@, %ld/%ld', True),
+        (127, '%lu sự kiện\nhôm nay', False),
+        (128, 'Ngày của bạn trống', False),
+        (129, 'Hôm nay', False),
+        (130, 'Chưa đọc được sự kiện lịch', False),
+        (132, 'Chưa có nhạc\nđang phát', False),
+        (133, 'Tạm dừng', False),
+        (140, 'Chưa có thông báo\nmới', False),
+        (141, 'Mới đây', False),
+        (143, 'Đang sạc', False),
+        (144, 'Pin', True),
+        (156, 'Bỏ ảnh vào ', False)
     ]
 }
 
-def apply_standby_strings(data, translations):
+def extract_clean_pristine_dylib():
+    with open(ORIG_DEB, "rb") as f:
+        deb_data = f.read()
+
+    pos = 8
+    while pos < len(deb_data):
+        header = deb_data[pos:pos+60]
+        name = header[:16].decode("latin1").strip()
+        size = int(header[48:58].strip())
+        if name == "data.tar.lzma":
+            tar_bytes = lzma.decompress(deb_data[pos+60:pos+60+size], format=lzma.FORMAT_ALONE)
+            with tarfile.open(fileobj=io.BytesIO(tar_bytes)) as tar:
+                return bytearray(tar.extractfile("var/jb/Library/MobileSubstrate/DynamicLibraries/StandBy.dylib").read())
+        pos += 60 + size
+        if size % 2:
+            pos += 1
+    raise RuntimeError("Could not find data.tar.lzma in original deb")
+
+def build_patched_dylib(clean_bytes, lang_code):
+    data = bytearray(clean_bytes)
+    s0 = 0x4000
+    s1 = 0x7c000
+
+    # 1. Lockscreen NOP
     NOP_INSN = bytes([0x1f, 0x20, 0x03, 0xd5])
-    # 1. Arch 0 (arm64, offset 0x4000)
-    arch0_target = 0x4000 + 0xc7f4
-    data[arch0_target:arch0_target+4] = NOP_INSN
-    
-    curr_vm_0 = 0x3e6ee
+    data[s0 + 0xc7f4 : s0 + 0xc7f8] = NOP_INSN
+    data[s1 + 0xbff4 : s1 + 0xbff8] = NOP_INSN
+
+    # 2. Auto Wake loop fixes
+    data[s0 + 0x33a04 : s0 + 0x33a08] = bytes([0xa8, 0x07, 0x00, 0x37])
+    data[s0 + 0x33a54 : s0 + 0x33a58] = bytes([0x0c, 0x01, 0x00, 0x54])
+    data[s0 + 0x33a58 : s0 + 0x33a5c] = bytes([0x04, 0x05, 0x00, 0x54])
+    data[s0 + 0x33aac : s0 + 0x33ab0] = bytes([0x00, 0x10, 0x7e, 0x1e])
+
+    data[s1 + 0x33a90 : s1 + 0x33a94] = bytes([0x08, 0x08, 0x00, 0x37])
+    data[s1 + 0x33ae0 : s1 + 0x33ae4] = bytes([0x0c, 0x01, 0x00, 0x54])
+    data[s1 + 0x33ae4 : s1 + 0x33ae8] = bytes([0x64, 0x05, 0x00, 0x54])
+    data[s1 + 0x33b3c : s1 + 0x33b40] = bytes([0x00, 0x10, 0x7e, 0x1e])
+
+    # 3. Backlight source = 1
+    data[s0 + 0x33c54 : s0 + 0x33c58] = bytes([0x22, 0x00, 0x80, 0x52])
+    data[s1 + 0x33d04 : s1 + 0x33d08] = bytes([0x22, 0x00, 0x80, 0x52])
+
+    # 4. ClearColor wallpaper
+    data[s0 + 0x20818 : s0 + 0x2081c] = bytes([0x01, 0x49, 0x41, 0xf9])
+    data[s1 + 0x20410 : s1 + 0x20414] = bytes([0x08, 0x22, 0x09, 0x91])
+
+    # 5. Widget swipe stuck
+    data[s0 + 0x1e66c : s0 + 0x1e670] = bytes([0x09, 0x00, 0x00, 0x14])
+    data[s0 + 0x1f8c4 : s0 + 0x1f8c8] = bytes([0x03, 0x00, 0x00, 0x14])
+
+    data[s1 + 0x1e1a4 : s1 + 0x1e1a8] = bytes([0x05, 0x00, 0x00, 0x14])
+    data[s1 + 0x1f430 : s1 + 0x1f434] = bytes([0x02, 0x00, 0x00, 0x14])
+
+    # 6. Respring listener
+    data[s0 + 0x38088 : s0 + 0x38090] = bytes([0xe3, 0x03, 0x1f, 0xaa, 0x1f, 0x20, 0x03, 0xd5])
+    data[s0 + 0x387e0 : s0 + 0x387ec] = bytes([0x08, 0x2a, 0xff, 0x17, 0x1f, 0x20, 0x03, 0xd5, 0x1f, 0x20, 0x03, 0xd5])
+    s0_tramp = bytes([
+        0xe2, 0x0f, 0x00, 0xf9, 0xe3, 0x0b, 0x00, 0xf9, 0xe4, 0x07, 0x00, 0xf9, 0x42, 0x01, 0x00, 0xb4,
+        0xe0, 0x03, 0x02, 0xaa, 0x48, 0x02, 0x00, 0x90, 0x01, 0xdd, 0x44, 0xf9, 0xfa, 0xdc, 0x00, 0x94,
+        0x1f, 0x68, 0x00, 0xf1, 0x81, 0x00, 0x00, 0x54, 0x00, 0x00, 0x80, 0xd2, 0x30, 0x00, 0x80, 0xd2,
+        0x01, 0x10, 0x00, 0xd4, 0xee, 0xd5, 0x00, 0x14
+    ])
+    data[s0 + 0x3000 : s0 + 0x3000 + len(s0_tramp)] = s0_tramp
+
+    data[s1 + 0x382a8 : s1 + 0x382b0] = bytes([0xe3, 0x03, 0x1f, 0xaa, 0x1f, 0x20, 0x03, 0xd5])
+    data[s1 + 0x38a68 : s1 + 0x38a74] = bytes([0x66, 0x21, 0xfe, 0x17, 0x1f, 0x20, 0x03, 0xd5, 0x1f, 0x20, 0x03, 0xd5])
+    s1_tramp = bytes([
+        0xe2, 0x0f, 0x00, 0xf9, 0xe3, 0x0b, 0x00, 0xf9, 0xe4, 0x07, 0x00, 0xf9, 0x62, 0x01, 0x00, 0xb4,
+        0xe0, 0x03, 0x02, 0xaa, 0x48, 0x02, 0x00, 0x90, 0x08, 0x61, 0x1b, 0x91, 0x01, 0x01, 0x40, 0xf9,
+        0x15, 0xde, 0x00, 0x94, 0x1f, 0x68, 0x00, 0xf1, 0x81, 0x00, 0x00, 0x54, 0x00, 0x00, 0x80, 0xd2,
+        0x30, 0x00, 0x80, 0xd2, 0x01, 0x10, 0x00, 0xd4, 0x8f, 0xd6, 0x00, 0x14
+    ])
+    data[s1 + 0x3000 : s1 + 0x3000 + len(s1_tramp)] = s1_tramp
+
+    # 7. Safe in-place string translation
+    slots = SLOT_TRANSLATIONS[lang_code]
     cf_base_0 = 0x44730
-    for idx, text in translations:
-        utf16_bytes = text.encode("utf-16le")
-        abs_off_0 = 0x4000 + curr_vm_0
-        data[abs_off_0:abs_off_0 + len(utf16_bytes)] = utf16_bytes
-
-        cf_entry_off = 0x4000 + cf_base_0 + idx * 32
-        isa = struct.unpack('<Q', data[cf_entry_off:cf_entry_off+8])[0]
-        new_entry = struct.pack('<QQQQ', isa, 0x7d0, curr_vm_0, len(text))
-        data[cf_entry_off:cf_entry_off+32] = new_entry
-        curr_vm_0 += len(utf16_bytes)
-
-    # 2. Arch 1 (arm64e, offset 0x7c000)
-    arch1_target = 0x7c000 + 0xbff4
-    data[arch1_target:arch1_target+4] = NOP_INSN
-
-    curr_vm_1 = 0x3e6f6
     cf_base_1 = 0x44a08
-    for idx, text in translations:
-        utf16_bytes = text.encode("utf-16le")
-        abs_off_1 = 0x7c000 + curr_vm_1
-        data[abs_off_1:abs_off_1 + len(utf16_bytes)] = utf16_bytes
 
-        cf_entry_off = 0x7c000 + cf_base_1 + idx * 32
-        isa = struct.unpack('<Q', data[cf_entry_off:cf_entry_off+8])[0]
-        str_ptr_1 = 0x1000000000000000 | curr_vm_1
-        new_entry = struct.pack('<QQQQ', isa, 0x7d0, str_ptr_1, len(text))
-        data[cf_entry_off:cf_entry_off+32] = new_entry
-        curr_vm_1 += len(utf16_bytes)
+    for idx, text, is_cstr in slots:
+        off0 = s0 + cf_base_0 + idx * 32
+        isa0, f0, ptr0, len0 = struct.unpack('<QQQQ', data[off0:off0+32])
+        off1 = s1 + cf_base_1 + idx * 32
+        isa1, f1, ptr1, len1 = struct.unpack('<QQQQ', data[off1:off1+32])
+        ptr1_clean = ptr1 & 0xffffffffffff
 
-    # 3. Re-sign CodeDirectory SHA-256 hashes
-    arches = [
-        (0, 0x4000, 487968),
-        (1, 0x7c000, 486416)
-    ]
+        if not is_cstr:
+            raw = text.encode('utf-16le')
+            data[s0+ptr0:s0+ptr0+len0*2] = b'\x00' * (len0*2)
+            data[s0+ptr0:s0+ptr0+len(raw)] = raw
+            struct.pack_into('<Q', data, off0 + 24, len(text))
+
+            data[s1+ptr1_clean:s1+ptr1_clean+len1*2] = b'\x00' * (len1*2)
+            data[s1+ptr1_clean:s1+ptr1_clean+len(raw)] = raw
+            struct.pack_into('<Q', data, off1 + 24, len(text))
+        else:
+            raw = text.encode('ascii')
+            data[s0+ptr0:s0+ptr0+len0] = b'\x00' * len0
+            data[s0+ptr0:s0+ptr0+len(raw)] = raw
+            struct.pack_into('<Q', data, off0 + 24, len(text))
+
+            data[s1+ptr1_clean:s1+ptr1_clean+len1] = b'\x00' * len1
+            data[s1+ptr1_clean:s1+ptr1_clean+len(raw)] = raw
+            struct.pack_into('<Q', data, off1 + 24, len(text))
+
+    # 8. Verify Weather strings strictly intact
+    weather_indices = [(105, '%d°C'), (113, '%ld°'), (114, 'C:%ld° T:%ld°'), (115, 'C:--° T:--°'), (131, '• '), (148, 'H:%ld° L:%ld°')]
+    for arch_name, arch_off, cf_base in [('arm64', s0, cf_base_0), ('arm64e', s1, cf_base_1)]:
+        for widx, exp in weather_indices:
+            off = arch_off + cf_base + widx * 32
+            isa, f, ptr, l = struct.unpack('<QQQQ', data[off:off+32])
+            ptr_clean = ptr & 0xffffffffffff
+            val = data[arch_off + ptr_clean : arch_off + ptr_clean + l*2].decode('utf-16le')
+            assert val == exp, f'{arch_name} weather {widx} mismatch: {val} != {exp}'
+
+    # 9. Re-sign CodeDirectory SHA-256 hashes
+    arches = [(0, s0, 487968), (1, s1, 486416)]
     for arch_idx, arch_off, arch_size in arches:
         arch_data = data[arch_off:arch_off+arch_size]
         ncmds, sizeofcmds = struct.unpack('<II', arch_data[16:24])
@@ -388,19 +461,16 @@ def apply_standby_strings(data, translations):
                 cs_dataoff, cs_datasize = struct.unpack('<II', arch_data[offset+8:offset+16])
                 break
             offset += cmdsize
-
         superblob_off = arch_off + cs_dataoff
         slot_type, slot_off = struct.unpack('>II', data[superblob_off+12:superblob_off+20])
         cd_abs_off = superblob_off + slot_off
         magic, length, ver, flags, hashoff, identoff, nspecial, ncode, codelimit, hashsize, hashtype, platform, pageshift = struct.unpack('>IIIIIIIIIBBBB', data[cd_abs_off:cd_abs_off+40])
         page_size = 1 << pageshift
-
         for p in range(ncode):
             p_start = arch_off + p * page_size
             p_end = arch_off + min((p + 1) * page_size, codelimit)
             h = hashlib.sha256(data[p_start:p_end]).digest()
-            h_dest = cd_abs_off + hashoff + p * hashsize
-            data[h_dest:h_dest+hashsize] = h
+            data[cd_abs_off+hashoff+p*hashsize:cd_abs_off+hashoff+(p+1)*hashsize] = h
 
     return data
 
@@ -455,7 +525,6 @@ def resign_macho(file_path):
     print(f"Resigned {os.path.basename(file_path)}: {total_mismatches} mismatches corrected")
 
 def prepare_settings_bundle():
-    # 1. Create lproj directories
     lprojs = {
         "en": (0, "English"),
         "id": (1, "Indonesian"),
@@ -466,22 +535,17 @@ def prepare_settings_bundle():
         lproj_dir = os.path.join(PREF_BUNDLE, f"{code}.lproj")
         os.makedirs(lproj_dir, exist_ok=True)
         
-        # Write Root.strings
         root_strings_path = os.path.join(lproj_dir, "Root.strings")
         content = generate_strings_content(idx, lang_name)
         with open(root_strings_path, "w", encoding="utf-8") as f:
             f.write(content)
-        print(f"Wrote {root_strings_path}")
         
-        # Write InfoPlist.strings
         infoplist_strings_path = os.path.join(lproj_dir, "InfoPlist.strings")
         display_name = "StandBy"
         info_content = f'CFBundleDisplayName = "{display_name}";\nCFBundleName = "{display_name}";\n'
         with open(infoplist_strings_path, "w", encoding="utf-8") as f:
             f.write(info_content)
-        print(f"Wrote {infoplist_strings_path}")
 
-    # 2. Update Info.plist
     info_plist_path = os.path.join(PREF_BUNDLE, "Info.plist")
     with open(info_plist_path, "rb") as f:
         info_pl = plistlib.load(f)
@@ -489,22 +553,18 @@ def prepare_settings_bundle():
     info_pl["CFBundleLocalizations"] = ["en", "id", "vi"]
     with open(info_plist_path, "wb") as f:
         plistlib.dump(info_pl, f, fmt=plistlib.FMT_XML)
-    print("Updated Info.plist with CFBundleLocalizations [en, id, vi]")
 
-    # 3. Update Root.plist with English base text, wakeScreen=False, Respring & Credits
     root_plist_path = os.path.join(PREF_BUNDLE, "Root.plist")
     with open(root_plist_path, "rb") as f:
         root_pl = plistlib.load(f)
 
-    # Mapping Vietnamese text -> English text
     vi_to_en = {}
     for en_k, vi_k, en_v, id_v, vi_v in TRANSLATIONS:
         vi_to_en[vi_k] = en_v
 
-    # Replace translatable fields in Root.plist
     for item in root_pl.get("items", []):
         if item.get("key") == "wakeScreen":
-            item["default"] = False  # Set wakeScreen default to False (OFF)
+            item["default"] = False
         if "label" in item and item["label"] in vi_to_en:
             item["label"] = vi_to_en[item["label"]]
         if "footerText" in item and item["footerText"] in vi_to_en:
@@ -518,11 +578,9 @@ def prepare_settings_bundle():
         if "shortTitles" in item:
             item["shortTitles"] = [vi_to_en.get(t, t) for t in item["shortTitles"]]
 
-    # Remove any old language link list or group
     root_pl["items"] = [it for it in root_pl["items"] if it.get("key") != "language"]
     root_pl["items"] = [it for it in root_pl["items"] if not (it.get("cell") == "PSGroupCell" and it.get("label") in ["Language", "Ngôn ngữ", "Bahasa"])]
 
-    # Insert clean Language info group
     enabled_idx = 1
     for idx, it in enumerate(root_pl["items"]):
         if it.get("key") == "enabled":
@@ -536,7 +594,6 @@ def prepare_settings_bundle():
     }
     root_pl["items"].insert(enabled_idx + 1, lang_group)
 
-    # Check if Respring and Credits cells already exist
     existing_actions = [it for it in root_pl["items"] if it.get("action") == "respring:"]
     if not existing_actions:
         root_pl["items"].append({
@@ -571,9 +628,7 @@ def prepare_settings_bundle():
 
     with open(root_plist_path, "wb") as f:
         plistlib.dump(root_pl, f, fmt=plistlib.FMT_XML)
-    print("Updated Root.plist with wakeScreen default OFF, clean Language info, Respring, and Credits")
 
-    # Resign StandByPref binary
     pref_bin_path = os.path.join(PREF_BUNDLE, "StandByPref")
     resign_macho(pref_bin_path)
 
@@ -595,7 +650,6 @@ def package_deb(output_filename):
     with open(control_path, "w", encoding="utf-8") as f:
         f.write(new_ctrl_content)
 
-    # Pack data.tar.lzma
     data_tar_buf = io.BytesIO()
     with tarfile.open(fileobj=data_tar_buf, mode="w") as tar:
         for root, dirs, files in os.walk(PKG_DATA):
@@ -634,9 +688,7 @@ def package_deb(output_filename):
 
     data_tar_bytes = data_tar_buf.getvalue()
     data_lzma_bytes = lzma.compress(data_tar_bytes, format=lzma.FORMAT_ALONE)
-    print(f"Compressed data.tar.lzma: {len(data_lzma_bytes)} bytes")
 
-    # Pack control.tar.gz
     ctrl_tar_buf = io.BytesIO()
     with gzip.GzipFile(fileobj=ctrl_tar_buf, mode="wb", mtime=0) as gz_out:
         with tarfile.open(fileobj=gz_out, mode="w") as tar:
@@ -678,67 +730,61 @@ def package_deb(output_filename):
 
     with open(out_deb_path, "wb") as deb:
         deb.write(b"!<arch>\n")
-
-        # debian-binary
         deb_bin_data = b"2.0\n"
         deb.write(make_ar_header("debian-binary", len(deb_bin_data)))
         deb.write(deb_bin_data)
         if len(deb_bin_data) % 2:
             deb.write(b"\n")
 
-        # control.tar.gz
         deb.write(make_ar_header("control.tar.gz", len(ctrl_gz_bytes)))
         deb.write(ctrl_gz_bytes)
         if len(ctrl_gz_bytes) % 2:
             deb.write(b"\n")
 
-        # data.tar.lzma
         deb.write(make_ar_header("data.tar.lzma", len(data_lzma_bytes)))
         deb.write(data_lzma_bytes)
         if len(data_lzma_bytes) % 2:
             deb.write(b"\n")
 
-    print(f"Successfully generated package: {out_deb_path} ({os.path.getsize(out_deb_path)} bytes)")
+    print(f"Generated package: {output_filename} ({os.path.getsize(out_deb_path)} bytes)")
 
     user_downloads = r"C:\Users\AmiaXf\Downloads"
     if os.path.exists(user_downloads):
         dl_target = os.path.join(user_downloads, output_filename)
         shutil.copy2(out_deb_path, dl_target)
-        print(f"Copied package to user Downloads: {dl_target}")
+        print(f"Copied to Downloads: {dl_target}")
 
 def build_all():
+    print("Extracting pristine dylib...")
+    clean_dylib = extract_clean_pristine_dylib()
+
+    print("Preparing localized settings bundle...")
     prepare_settings_bundle()
 
     dylib_path = os.path.join(PKG_DATA, "var", "jb", "Library", "MobileSubstrate", "DynamicLibraries", "StandBy.dylib")
-    # Read the clean baseline dylib (already patched with bug fixes)
-    with open(dylib_path, "rb") as f:
-        clean_dylib_base = bytearray(f.read())
 
-    # 1. Build Indonesian Variant
+    # 1. Indonesian Variant
     print("\n--- Building Indonesian Variant ---")
-    data_id = bytearray(clean_dylib_base)
-    patched_id = apply_standby_strings(data_id, DYLIB_STRINGS["id"])
+    patched_id = build_patched_dylib(clean_dylib, "id")
     with open(dylib_path, "wb") as f:
         f.write(patched_id)
     package_deb("com.phucbakhi.phucstandby_2.0.26-2_iphoneos-arm64_id.deb")
 
-    # 2. Build Vietnamese Variant
+    # 2. Vietnamese Variant
     print("\n--- Building Vietnamese Variant ---")
-    data_vi = bytearray(clean_dylib_base)
-    patched_vi = apply_standby_strings(data_vi, DYLIB_STRINGS["vi"])
+    patched_vi = build_patched_dylib(clean_dylib, "vi")
     with open(dylib_path, "wb") as f:
         f.write(patched_vi)
     package_deb("com.phucbakhi.phucstandby_2.0.26-2_iphoneos-arm64_vi.deb")
 
-    # 3. Build English Default Variant (Primary package)
+    # 3. English Default Variant (Primary)
     print("\n--- Building English Default Variant (Primary) ---")
-    data_en = bytearray(clean_dylib_base)
-    patched_en = apply_standby_strings(data_en, DYLIB_STRINGS["en"])
+    patched_en = build_patched_dylib(clean_dylib, "en")
     with open(dylib_path, "wb") as f:
         f.write(patched_en)
     package_deb("com.phucbakhi.phucstandby_2.0.26-2_iphoneos-arm64.deb")
 
-    print("\n[SUCCESS] All packages built and copied to Downloads successfully!")
+    print("\n[SUCCESS] All 3 packages built with 100% weather string protection and copied to Downloads!")
 
 if __name__ == "__main__":
     build_all()
