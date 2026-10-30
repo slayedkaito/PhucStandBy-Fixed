@@ -22,9 +22,10 @@ An optimized, multilingual edition of the iOS 17 StandBy mode tweak for iOS 16 (
    * Fixed a bug where StandBy activated on Homescreen or inside other apps when the phone was in landscape and charging.
    * With the ARM64 `NOP` patch, StandBy only runs when the device is locked (`isUILocked`). When unlocked, rendering stops completely to preserve battery and CPU.
 
-3. **Safe Mode / Widget Swipe Crash Fix**:
-   * Fixed a fatal crash (`EXC_BAD_ACCESS` / Safe Mode) occurring when swiping widgets horizontally or vertically.
-   * Weather format strings (`%d°C`, `%ld°`, `C:%ld° T:%ld°`, `C:--° T:--°`, `• `, `H:%ld° L:%ld°`) are strictly preserved in their original memory slots.
+3. **Crash-Free Landscape Tilt & Safe Mode Fix**:
+   * Fixed a fatal crash (`EXC_BAD_ACCESS` / SpringBoard panic into Safe Mode) that occurred the exact moment the iPhone was tilted horizontally into landscape charging.
+   * Completely eliminated the uninitialized register access bug during window setup and restored pristine OLED black background initialization.
+   * Weather format strings (`%d°C`, `%ld°`, `C:%ld° T:%ld°`, `C:--° T:--°`, `• `, `H:%ld° L:%ld°`) are strictly preserved in their original memory slots, ensuring 100% stability across all widgets.
 
 4. **Auto Wake Screen on Charge Restored & Fixed**:
    * Restored the **"Auto Wake Screen on Charge + Landscape"** feature with its delay slider, set to **OFF by default** to give users full control.

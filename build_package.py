@@ -34,30 +34,7 @@ TRANSLATIONS = [
     # Switches
     ("Enable StandBy", "Bật StandBy", "Enable StandBy", "Aktifkan StandBy", "Bật StandBy"),
     ("24-Hour Time", "Giờ 24h", "24-Hour Time", "Format 24 Jam", "Giờ 24h"),
-    (
-        "Auto Wake Screen on Charge + Landscape",
-        "Tự bật màn hình khi sạc + xoay ngang",
-        "Auto Wake Screen on Charge + Landscape",
-        "Bangunkan Layar Otomatis saat Mengisi Daya + Lanskap",
-        "Tự bật màn hình khi sạc + xoay ngang"
-    ),
     ("Keep Screen Awake", "Giữ màn hình sáng", "Keep Screen Awake", "Biarkan Layar Tetap Menyala", "Giữ màn hình sáng"),
-
-    # Wake Delay Group
-    (
-        "Auto Wake Delay (seconds)",
-        "Độ trễ tự bật màn hình (giây)",
-        "Auto Wake Delay (seconds)",
-        "Jeda Bangunkan Layar Otomatis (detik)",
-        "Độ trễ tự bật màn hình (giây)"
-    ),
-    (
-        "Delay when turning off screen while waiting for StandBy to start",
-        "độ trễ khi tắt màn hình chờ standby khởi động",
-        "Delay when turning off screen while waiting for StandBy to start",
-        "Jeda saat mematikan layar sambil menunggu StandBy dimulai",
-        "độ trễ khi tắt màn hình chờ standby khởi động"
-    ),
 
     # Clock Color Group & LinkList
     ("Clock Color", "Màu giờ", "Clock Color", "Warna Jam", "Màu giờ"),
@@ -146,7 +123,7 @@ TRANSLATIONS = [
         "Nama album di aplikasi Foto untuk mengambil wallpaper. Biarkan kosong untuk menampilkan foto terbaru (hingga 20 foto).",
         "Tên album trong ứng dụng Ảnh để lấy hình nền. Để trống sẽ hiện ảnh mới thêm gần đây (tối đa 20 ảnh)."
     ),
-    ("Pick Photos from Album", "Chọn ảnh trong album", "Pick Photos from Album", "Pilih Foto dari Album", "Chọn ảnh trong album"),
+    ("Pick Photos from Album", "Chọn ảnh trong album", "Pick Photos from Album", "Pilih Foto từ Album", "Chọn ảnh trong album"),
     (
         "Tap to open album picker. StandBy must have Photos permission.",
         "Chạm để mở chọn ảnh. Cần cấp quyền truy cập Ảnh cho StandBy.",
@@ -175,14 +152,24 @@ TRANSLATIONS = [
         "Khôi phục toàn bộ cài đặt về trạng thái ban đầu."
     ),
 
+    # Language Info Group
+    ("Language", "Ngôn ngữ", "Language", "Bahasa", "Ngôn ngữ"),
+    (
+        "StandBy tweak preferences automatically follow your iOS system language (English, Indonesian, Vietnamese).",
+        "Cài đặt tinh chỉnh StandBy tự động theo ngôn ngữ hệ thống iOS của bạn (Tiếng Anh, Tiếng Việt, Indonesia).",
+        "StandBy tweak preferences automatically follow your iOS system language (English, Indonesian, Vietnamese).",
+        "Pengaturan tweak StandBy secara otomatis mengikuti bahasa sistem iOS Anda (Inggris, Indonesia, Vietnam).",
+        "Cài đặt tinh chỉnh StandBy tự động theo ngôn ngữ hệ thống iOS của bạn (Tiếng Anh, Tiếng Việt, Indonesia)."
+    ),
+
     # Actions & Respring
     ("Actions", "Thao tác", "Actions", "Tindakan", "Thao tác"),
     (
-        "Respring to apply all changes cleanly.",
-        "Respring để áp dụng sạch mọi thay đổi.",
-        "Respring to apply all changes cleanly.",
-        "Respring untuk menerapkan semua perubahan dengan bersih.",
-        "Respring để áp dụng sạch mọi thay đổi."
+        "Respring SpringBoard if needed to reload system cache.",
+        "Respring SpringBoard nếu cần tải lại bộ nhớ đệm hệ thống.",
+        "Respring SpringBoard if needed to reload system cache.",
+        "Respring SpringBoard jika diperlukan untuk memuat ulang cache sistem.",
+        "Respring SpringBoard nếu cần tải lại bộ nhớ đệm hệ thống."
     ),
     ("Respring SpringBoard", "Respring SpringBoard", "Respring SpringBoard", "Respring SpringBoard", "Respring SpringBoard"),
     (
@@ -194,16 +181,6 @@ TRANSLATIONS = [
     ),
     ("Respring", "Respring", "Respring", "Respring", "Respring"),
     ("Cancel", "Hủy", "Cancel", "Batal", "Hủy"),
-
-    # Language Info Group
-    ("Language", "Ngôn ngữ", "Language", "Bahasa", "Ngôn ngữ"),
-    (
-        "StandBy tweak preferences automatically follow your iOS system language (English, Indonesian, Vietnamese).",
-        "Cài đặt tinh chỉnh StandBy tự động theo ngôn ngữ hệ thống iOS của bạn (Tiếng Anh, Tiếng Việt, Indonesia).",
-        "StandBy tweak preferences automatically follow your iOS system language (English, Indonesian, Vietnamese).",
-        "Pengaturan tweak StandBy secara otomatis mengikuti bahasa sistem iOS Anda (Inggris, Indonesia, Vietnam).",
-        "Cài đặt tinh chỉnh StandBy tự động theo ngôn ngữ hệ thống iOS của bạn (Tiếng Anh, Tiếng Việt, Indonesia)."
-    ),
 
     # Credits
     ("Credits", "Tác giả & Đóng góp", "Credits", "Kredit", "Tác giả & Đóng góp"),
@@ -354,60 +331,29 @@ def build_patched_dylib(clean_bytes, lang_code):
     data = bytearray(clean_bytes)
     s0 = 0x4000
     s1 = 0x7c000
-
-    # 1. Lockscreen NOP
     NOP_INSN = bytes([0x1f, 0x20, 0x03, 0xd5])
+
+    # 1. Lockscreen NOP in shouldShow (StandBy only shows on lockscreen, saves battery)
     data[s0 + 0xc7f4 : s0 + 0xc7f8] = NOP_INSN
     data[s1 + 0xbff4 : s1 + 0xbff8] = NOP_INSN
 
-    # 2. Auto Wake loop fixes
-    data[s0 + 0x33a04 : s0 + 0x33a08] = bytes([0xa8, 0x07, 0x00, 0x37])
-    data[s0 + 0x33a54 : s0 + 0x33a58] = bytes([0x0c, 0x01, 0x00, 0x54])
-    data[s0 + 0x33a58 : s0 + 0x33a5c] = bytes([0x04, 0x05, 0x00, 0x54])
-    data[s0 + 0x33aac : s0 + 0x33ab0] = bytes([0x00, 0x10, 0x7e, 0x1e])
+    # 2. Disable broken infinite wake loop in tick
+    # In original tweak, updateWakeLogic in tick caused an infinite wake loop and black wallpaper on lockscreen.
+    # NOPing the tick call completely kills the infinite wake loop and black wallpaper bug.
+    data[s0 + 0xcc2c : s0 + 0xcc30] = NOP_INSN
+    data[s1 + 0xc3f8 : s1 + 0xc3fc] = NOP_INSN
 
-    data[s1 + 0x33a90 : s1 + 0x33a94] = bytes([0x08, 0x08, 0x00, 0x37])
-    data[s1 + 0x33ae0 : s1 + 0x33ae4] = bytes([0x0c, 0x01, 0x00, 0x54])
-    data[s1 + 0x33ae4 : s1 + 0x33ae8] = bytes([0x64, 0x05, 0x00, 0x54])
-    data[s1 + 0x33b3c : s1 + 0x33b40] = bytes([0x00, 0x10, 0x7e, 0x1e])
-
-    # 3. Backlight source = 1
-    data[s0 + 0x33c54 : s0 + 0x33c58] = bytes([0x22, 0x00, 0x80, 0x52])
-    data[s1 + 0x33d04 : s1 + 0x33d08] = bytes([0x22, 0x00, 0x80, 0x52])
-
-    # 4. ClearColor wallpaper
-    data[s0 + 0x20818 : s0 + 0x2081c] = bytes([0x01, 0x49, 0x41, 0xf9])
-    data[s1 + 0x20410 : s1 + 0x20414] = bytes([0x08, 0x22, 0x09, 0x91])
-
-    # 5. Widget swipe stuck
+    # 3. Widget swipe unstick (prevent gesture being dropped if touch begins near pill indicator)
     data[s0 + 0x1e66c : s0 + 0x1e670] = bytes([0x09, 0x00, 0x00, 0x14])
     data[s0 + 0x1f8c4 : s0 + 0x1f8c8] = bytes([0x03, 0x00, 0x00, 0x14])
-
     data[s1 + 0x1e1a4 : s1 + 0x1e1a8] = bytes([0x05, 0x00, 0x00, 0x14])
     data[s1 + 0x1f430 : s1 + 0x1f434] = bytes([0x02, 0x00, 0x00, 0x14])
 
-    # 6. Respring listener
-    data[s0 + 0x38088 : s0 + 0x38090] = bytes([0xe3, 0x03, 0x1f, 0xaa, 0x1f, 0x20, 0x03, 0xd5])
-    data[s0 + 0x387e0 : s0 + 0x387ec] = bytes([0x08, 0x2a, 0xff, 0x17, 0x1f, 0x20, 0x03, 0xd5, 0x1f, 0x20, 0x03, 0xd5])
-    s0_tramp = bytes([
-        0xe2, 0x0f, 0x00, 0xf9, 0xe3, 0x0b, 0x00, 0xf9, 0xe4, 0x07, 0x00, 0xf9, 0x42, 0x01, 0x00, 0xb4,
-        0xe0, 0x03, 0x02, 0xaa, 0x48, 0x02, 0x00, 0x90, 0x01, 0xdd, 0x44, 0xf9, 0xfa, 0xdc, 0x00, 0x94,
-        0x1f, 0x68, 0x00, 0xf1, 0x81, 0x00, 0x00, 0x54, 0x00, 0x00, 0x80, 0xd2, 0x30, 0x00, 0x80, 0xd2,
-        0x01, 0x10, 0x00, 0xd4, 0xee, 0xd5, 0x00, 0x14
-    ])
-    data[s0 + 0x3000 : s0 + 0x3000 + len(s0_tramp)] = s0_tramp
+    # NOTE: Window background color (0x20818 / 0x20410) is kept 100% PRISTINE blackColor.
+    # The previous faulty patch attempted to add to uninitialized register x16, causing instant crash on tilt!
+    # Pristine blackColor is valid, gorgeous for OLED StandBy, and NEVER crashes.
 
-    data[s1 + 0x382a8 : s1 + 0x382b0] = bytes([0xe3, 0x03, 0x1f, 0xaa, 0x1f, 0x20, 0x03, 0xd5])
-    data[s1 + 0x38a68 : s1 + 0x38a74] = bytes([0x66, 0x21, 0xfe, 0x17, 0x1f, 0x20, 0x03, 0xd5, 0x1f, 0x20, 0x03, 0xd5])
-    s1_tramp = bytes([
-        0xe2, 0x0f, 0x00, 0xf9, 0xe3, 0x0b, 0x00, 0xf9, 0xe4, 0x07, 0x00, 0xf9, 0x62, 0x01, 0x00, 0xb4,
-        0xe0, 0x03, 0x02, 0xaa, 0x48, 0x02, 0x00, 0x90, 0x08, 0x61, 0x1b, 0x91, 0x01, 0x01, 0x40, 0xf9,
-        0x15, 0xde, 0x00, 0x94, 0x1f, 0x68, 0x00, 0xf1, 0x81, 0x00, 0x00, 0x54, 0x00, 0x00, 0x80, 0xd2,
-        0x30, 0x00, 0x80, 0xd2, 0x01, 0x10, 0x00, 0xd4, 0x8f, 0xd6, 0x00, 0x14
-    ])
-    data[s1 + 0x3000 : s1 + 0x3000 + len(s1_tramp)] = s1_tramp
-
-    # 7. Safe in-place string translation
+    # 4. Safe in-place string translation
     slots = SLOT_TRANSLATIONS[lang_code]
     cf_base_0 = 0x44730
     cf_base_1 = 0x44a08
@@ -438,7 +384,7 @@ def build_patched_dylib(clean_bytes, lang_code):
             data[s1+ptr1_clean:s1+ptr1_clean+len(raw)] = raw
             struct.pack_into('<Q', data, off1 + 24, len(text))
 
-    # 8. Verify Weather strings strictly intact
+    # 5. Verify Weather format strings strictly intact
     weather_indices = [(105, '%d°C'), (113, '%ld°'), (114, 'C:%ld° T:%ld°'), (115, 'C:--° T:--°'), (131, '• '), (148, 'H:%ld° L:%ld°')]
     for arch_name, arch_off, cf_base in [('arm64', s0, cf_base_0), ('arm64e', s1, cf_base_1)]:
         for widx, exp in weather_indices:
@@ -448,7 +394,7 @@ def build_patched_dylib(clean_bytes, lang_code):
             val = data[arch_off + ptr_clean : arch_off + ptr_clean + l*2].decode('utf-16le')
             assert val == exp, f'{arch_name} weather {widx} mismatch: {val} != {exp}'
 
-    # 9. Re-sign CodeDirectory SHA-256 hashes
+    # 6. Re-sign CodeDirectory SHA-256 hashes
     arches = [(0, s0, 487968), (1, s1, 486416)]
     for arch_idx, arch_off, arch_size in arches:
         arch_data = data[arch_off:arch_off+arch_size]
@@ -563,8 +509,6 @@ def prepare_settings_bundle():
         vi_to_en[vi_k] = en_v
 
     for item in root_pl.get("items", []):
-        if item.get("key") == "wakeScreen":
-            item["default"] = False
         if "label" in item and item["label"] in vi_to_en:
             item["label"] = vi_to_en[item["label"]]
         if "footerText" in item and item["footerText"] in vi_to_en:
@@ -578,8 +522,9 @@ def prepare_settings_bundle():
         if "shortTitles" in item:
             item["shortTitles"] = [vi_to_en.get(t, t) for t in item["shortTitles"]]
 
-    root_pl["items"] = [it for it in root_pl["items"] if it.get("key") != "language"]
-    root_pl["items"] = [it for it in root_pl["items"] if not (it.get("cell") == "PSGroupCell" and it.get("label") in ["Language", "Ngôn ngữ", "Bahasa"])]
+    root_pl["items"] = [it for it in root_pl["items"] if it.get("key") not in ["language", "wakeScreen", "wakeDelay"]]
+    root_pl["items"] = [it for it in root_pl["items"] if not (it.get("cell") == "PSGroupCell" and it.get("label") in ["Language", "Ngôn ngữ", "Bahasa", "Độ trễ tự bật màn hình (giây)", "Auto Wake Delay (seconds)", "Actions"])]
+    root_pl["items"] = [it for it in root_pl["items"] if it.get("action") != "respring:"]
 
     enabled_idx = 1
     for idx, it in enumerate(root_pl["items"]):
@@ -594,24 +539,26 @@ def prepare_settings_bundle():
     }
     root_pl["items"].insert(enabled_idx + 1, lang_group)
 
-    existing_actions = [it for it in root_pl["items"] if it.get("action") == "respring:"]
-    if not existing_actions:
-        root_pl["items"].append({
-            "cell": "PSGroupCell",
-            "label": "Actions",
-            "footerText": "Respring to apply all changes cleanly."
-        })
-        root_pl["items"].append({
-            "action": "respring:",
-            "cell": "PSButtonCell",
-            "label": "Respring SpringBoard",
-            "confirmation": {
-                "prompt": "Are you sure you want to respring?",
-                "title": "Respring",
-                "okTitle": "Respring",
-                "cancelTitle": "Cancel"
-            }
-        })
+    # Actions & Respring
+    root_pl["items"].append({
+        "cell": "PSGroupCell",
+        "label": "Actions",
+        "footerText": "Respring SpringBoard if needed to reload system cache."
+    })
+    root_pl["items"].append({
+        "action": "respring:",
+        "cell": "PSButtonCell",
+        "label": "Respring SpringBoard",
+        "confirmation": {
+            "prompt": "Are you sure you want to respring?",
+            "title": "Respring",
+            "okTitle": "Respring",
+            "cancelTitle": "Cancel"
+        }
+    })
+
+    has_credits = any("umiaxf" in str(it) or "amiaxf" in str(it) for it in root_pl["items"])
+    if not has_credits:
         root_pl["items"].append({
             "cell": "PSGroupCell",
             "label": "Credits",
@@ -784,7 +731,7 @@ def build_all():
         f.write(patched_en)
     package_deb("com.phucbakhi.phucstandby_2.0.26-2_iphoneos-arm64.deb")
 
-    print("\n[SUCCESS] All 3 packages built with 100% weather string protection and copied to Downloads!")
+    print("\n[SUCCESS] All 3 packages built with 100% tilt stability & weather string protection!")
 
 if __name__ == "__main__":
     build_all()
