@@ -248,45 +248,45 @@ def generate_strings_content(lang_idx, lang_name):
     lines.append("")
     return "\n".join(lines)
 
-# Strict in-place translation tables that preserve weather strings 100%
+# Strict in-place translation tables that preserve weather strings and binary selectors 100%
 SLOT_TRANSLATIONS = {
     "en": [
-        (81,  'Playing', False),                  # 7 chars <= 10
-        (109, 'SUNDAY', False),                   # 6 chars <= 9
-        (110, 'DAY %ld', False),                  # 7 chars <= 8
-        (124, 'Sunday', False),                   # 6 chars <= 9
-        (125, 'Day %ld', False),                  # 7 chars <= 8
+        (81,  'Playing', False),                  # 7 chars <= 9
+        (109, 'SUNDAY', False),                   # 6 chars <= 8
+        (110, 'DAY %ld', False),                  # 7 chars <= 7
+        (124, 'Sunday', False),                   # 6 chars <= 8
+        (125, 'Day %ld', False),                  # 7 chars <= 7
         (126, '%@, %ld/%ld', True),               # 11 chars <= 15
-        (127, '%lu events\ntoday', False),        # 16 chars <= 20
-        (128, 'Your day is clear', False),        # 17 chars <= 19
-        (129, 'Today', False),                    # 5 chars <= 8
-        (130, 'Cannot read calendar', False),     # 20 chars <= 27
-        (132, 'No music\nplaying', False),        # 16 chars <= 23
-        (133, 'Paused', False),                   # 6 chars <= 9
-        (140, 'No new\nnotifications', False),    # 21 chars <= 22
-        (141, 'Recent', False),                   # 6 chars <= 8
-        (143, 'Charging', False),                 # 8 chars <= 9
+        (127, '%lu events\ntoday', False),        # 16 chars <= 19
+        (128, 'Your day is clear', False),        # 17 chars <= 18
+        (129, 'Today', False),                    # 5 chars <= 7
+        (130, 'Cannot read calendar', False),     # 20 chars <= 26
+        (132, 'No music\nplaying', False),        # 16 chars <= 22
+        (133, 'Paused', False),                   # 6 chars <= 8
+        (140, 'No new\nnotifications', False),    # 20 chars <= 21
+        (141, 'Recent', False),                   # 6 chars <= 7
+        (143, 'Charging', False),                 # 8 chars <= 8
         (144, 'Bat', True),                       # 3 chars <= 3
-        (156, 'Add photos to ', False)            # 14 chars <= 25
+        (156, 'Add photos ', False)               # 11 chars <= 11 (STRICT: preserves initWithFrame: selector!)
     ],
     "id": [
-        (81,  'Memutar', False),                  # 7 chars <= 10
-        (109, 'MINGGU', False),                   # 6 chars <= 9
-        (110, 'HARI %ld', False),                 # 8 chars <= 8
-        (124, 'Minggu', False),                   # 6 chars <= 9
-        (125, 'Hari %ld', False),                 # 8 chars <= 8
+        (81,  'Memutar', False),                  # 7 chars <= 9
+        (109, 'MINGGU', False),                   # 6 chars <= 8
+        (110, 'HRI %ld', False),                  # 7 chars <= 7
+        (124, 'Minggu', False),                   # 6 chars <= 8
+        (125, 'Hri %ld', False),                  # 7 chars <= 7
         (126, '%@, %ld/%ld', True),               # 11 chars <= 15
-        (127, '%lu acara hari ini', False),       # 18 chars <= 20
-        (128, 'Tidak ada acara', False),          # 15 chars <= 19
-        (129, 'Hari ini', False),                 # 8 chars <= 8
-        (130, 'Gagal membaca kalender', False),   # 22 chars <= 27
-        (132, 'Tidak ada musik', False),          # 15 chars <= 23
-        (133, 'Dijeda', False),                   # 6 chars <= 9
-        (140, 'Tidak ada notifikasi', False),     # 20 chars <= 22
-        (141, 'Terbaru', False),                  # 7 chars <= 8
-        (143, 'Isi Daya', False),                 # 8 chars <= 9
+        (127, '%lu acara hari ini', False),       # 18 chars <= 19
+        (128, 'Tidak ada acara', False),          # 15 chars <= 18
+        (129, 'SaatIni', False),                  # 7 chars <= 7
+        (130, 'Gagal membaca kalender', False),   # 22 chars <= 26
+        (132, 'Tidak ada musik', False),          # 15 chars <= 22
+        (133, 'Dijeda', False),                   # 6 chars <= 8
+        (140, 'Tidak ada notifikasi', False),     # 20 chars <= 21
+        (141, 'Terbaru', False),                  # 7 chars <= 7
+        (143, 'Isi Daya', False),                 # 8 chars <= 8
         (144, 'Bat', True),                       # 3 chars <= 3
-        (156, 'Pilih foto ', False)               # 11 chars <= 25
+        (156, 'Pilih foto ', False)               # 11 chars <= 11 (STRICT: preserves initWithFrame: selector!)
     ],
     "vi": [
         (81,  'Đang phát', False),
@@ -305,7 +305,7 @@ SLOT_TRANSLATIONS = {
         (141, 'Mới đây', False),
         (143, 'Đang sạc', False),
         (144, 'Pin', True),
-        (156, 'Bỏ ảnh vào ', False)
+        (156, 'Bỏ ảnh vào ', False)               # 11 chars <= 11 (STRICT: preserves initWithFrame: selector!)
     ]
 }
 
@@ -343,17 +343,10 @@ def build_patched_dylib(clean_bytes, lang_code):
     data[s0 + 0xcc2c : s0 + 0xcc30] = NOP_INSN
     data[s1 + 0xc3f8 : s1 + 0xc3fc] = NOP_INSN
 
-    # 3. Widget swipe unstick (prevent gesture being dropped if touch begins near pill indicator)
-    data[s0 + 0x1e66c : s0 + 0x1e670] = bytes([0x09, 0x00, 0x00, 0x14])
-    data[s0 + 0x1f8c4 : s0 + 0x1f8c8] = bytes([0x03, 0x00, 0x00, 0x14])
-    data[s1 + 0x1e1a4 : s1 + 0x1e1a8] = bytes([0x05, 0x00, 0x00, 0x14])
-    data[s1 + 0x1f430 : s1 + 0x1f434] = bytes([0x02, 0x00, 0x00, 0x14])
-
     # NOTE: Window background color (0x20818 / 0x20410) is kept 100% PRISTINE blackColor.
-    # The previous faulty patch attempted to add to uninitialized register x16, causing instant crash on tilt!
     # Pristine blackColor is valid, gorgeous for OLED StandBy, and NEVER crashes.
 
-    # 4. Safe in-place string translation
+    # 3. Safe in-place string translation
     slots = SLOT_TRANSLATIONS[lang_code]
     cf_base_0 = 0x44730
     cf_base_1 = 0x44a08
@@ -394,7 +387,11 @@ def build_patched_dylib(clean_bytes, lang_code):
             val = data[arch_off + ptr_clean : arch_off + ptr_clean + l*2].decode('utf-16le')
             assert val == exp, f'{arch_name} weather {widx} mismatch: {val} != {exp}'
 
-    # 6. Re-sign CodeDirectory SHA-256 hashes
+    # 6. Verify UIKit selectors (e.g. initWithFrame:) strictly intact
+    assert data[s0+0x3e8ea:s0+0x3e8f8] == b'initWithFrame:', f"s0 initWithFrame: corrupted! Found {data[s0+0x3e8ea:s0+0x3e8f8]}"
+    assert data[s1+0x3e8f2:s1+0x3e900] == b'initWithFrame:', f"s1 initWithFrame: corrupted! Found {data[s1+0x3e8f2:s1+0x3e900]}"
+
+    # 7. Re-sign CodeDirectory SHA-256 hashes
     arches = [(0, s0, 487968), (1, s1, 486416)]
     for arch_idx, arch_off, arch_size in arches:
         arch_data = data[arch_off:arch_off+arch_size]
