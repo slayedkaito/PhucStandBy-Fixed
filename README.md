@@ -11,10 +11,12 @@ An optimized, multilingual edition of the iOS 17 StandBy mode tweak for iOS 16 (
 
 ## ✨ Improvements in this Edition (v2.0.26-2)
 
-1. **Multilingual & System Language Auto-Detection**:
-   * **Settings Bundle (`StandByPref.bundle`)**: Uses native iOS `.lproj` bundles (`id.lproj`, `en.lproj`, `vi.lproj`) to automatically detect and adapt to system language (Indonesian, English, and Vietnamese).
-   * **StandBy Overlay UI (`StandBy.dylib`)**: Translated all 17 on-screen widget strings from Vietnamese to clear, modern Indonesian/English.
-   * Cleaned offensive placeholder strings in settings to standard examples (`cth. Wallpaper Saya`).
+1. **Dynamic Language Selector & Multilingual Engine**:
+   * **In-Settings Language Selector**: Added a dedicated **Language** setting in the tweak preferences with options: **Auto (System Language)**, **English**, **Bahasa Indonesia**, and **Tiếng Việt**.
+   * **Synchronized Mode & Settings**: Both the Settings pane and the StandBy mode overlay adapt dynamically to the chosen language.
+   * When set to **Auto**, StandBy mode automatically matches your device system language (English on English iPhones, Indonesian on Indonesian iPhones), completely eliminating the mixed-language issue.
+   * Built with a zero-overhead, 100% crash-proof memory switching engine that preserves all format specifiers and never triggers Safe Mode.
+   * Cleaned offensive placeholder strings in settings to standard examples (`e.g. My Wallpaper` / `cth. Wallpaper Saya`).
 
 2. **Lockscreen-Only Activation (`shouldShow` Patch)**:
    * Fixed a bug where StandBy activated on Homescreen or inside other apps when the phone was in landscape and charging.

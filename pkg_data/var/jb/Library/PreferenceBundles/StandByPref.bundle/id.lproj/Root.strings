@@ -95,6 +95,12 @@
 "Respring" = "Respring";
 "Cancel" = "Batal";
 "Hủy" = "Batal";
+"Language" = "Bahasa";
+"Ngôn ngữ" = "Bahasa";
+"Select language for StandBy mode and settings. 'Auto' follows your device system language." = "Pilih bahasa untuk mode StandBy dan Pengaturan. 'Otomatis' mengikuti bahasa sistem perangkat Anda.";
+"Chọn ngôn ngữ cho chế độ StandBy và Cài đặt. 'Tự động' sẽ theo ngôn ngữ hệ thống." = "Pilih bahasa untuk mode StandBy dan Pengaturan. 'Otomatis' mengikuti bahasa sistem perangkat Anda.";
+"Auto (System Language)" = "Otomatis (Bahasa Sistem)";
+"Tự động (Theo hệ thống)" = "Otomatis (Bahasa Sistem)";
 "Credits" = "Kredit";
 "Tác giả & Đóng góp" = "Kredit";
 "PhucStandBy Fixed & Maintained by amiaxf" = "PhucStandBy Diperbaiki & Dikelola oleh amiaxf";

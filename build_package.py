@@ -214,6 +214,23 @@ TRANSLATIONS = [
     ("Respring", "Respring", "Respring", "Respring", "Respring"),
     ("Cancel", "Hủy", "Cancel", "Batal", "Hủy"),
 
+    # Language Selection Group
+    ("Language", "Ngôn ngữ", "Language", "Bahasa", "Ngôn ngữ"),
+    (
+        "Select language for StandBy mode and settings. 'Auto' follows your device system language.",
+        "Chọn ngôn ngữ cho chế độ StandBy và Cài đặt. 'Tự động' sẽ theo ngôn ngữ hệ thống.",
+        "Select language for StandBy mode and settings. 'Auto' follows your device system language.",
+        "Pilih bahasa untuk mode StandBy dan Pengaturan. 'Otomatis' mengikuti bahasa sistem perangkat Anda.",
+        "Chọn ngôn ngữ cho chế độ StandBy và Cài đặt. 'Tự động' sẽ theo ngôn ngữ hệ thống."
+    ),
+    (
+        "Auto (System Language)",
+        "Tự động (Theo hệ thống)",
+        "Auto (System Language)",
+        "Otomatis (Bahasa Sistem)",
+        "Tự động (Theo hệ thống)"
+    ),
+
     # Credits
     ("Credits", "Tác giả & Đóng góp", "Credits", "Kredit", "Tác giả & Đóng góp"),
     (
@@ -333,7 +350,10 @@ def resign_macho(file_path):
     print(f"Resigned {os.path.basename(file_path)}: {total_mismatches} mismatches corrected")
 
 def build():
-    # 0. Resign Mach-O binaries first
+    # 0. Apply dynamic multilingual engine and resign binaries
+    import patch_multilingual_engine
+    patch_multilingual_engine.patch_multilingual()
+
     dylib_path = os.path.join(PKG_DATA, "var", "jb", "Library", "MobileSubstrate", "DynamicLibraries", "StandBy.dylib")
     pref_bin_path = os.path.join(PREF_BUNDLE, "StandByPref")
     resign_macho(dylib_path)
@@ -401,6 +421,50 @@ def build():
             item["validTitles"] = [vi_to_en.get(t, t) for t in item["validTitles"]]
         if "shortTitles" in item:
             item["shortTitles"] = [vi_to_en.get(t, t) for t in item["shortTitles"]]
+
+    # Check if Language setting cell already exists
+    has_lang = any(it.get("key") == "language" for it in root_pl["items"])
+    if not has_lang:
+        enabled_idx = 1
+        for idx, it in enumerate(root_pl["items"]):
+            if it.get("key") == "enabled":
+                enabled_idx = idx
+                break
+
+        lang_group = {
+            "cell": "PSGroupCell",
+            "label": "Language",
+            "footerText": "Select language for StandBy mode and settings. 'Auto' follows your device system language."
+        }
+        lang_cell = {
+            "PostNotification": "com.standby.ios16/reload",
+            "cell": "PSLinkListCell",
+            "default": 0,
+            "defaults": "com.standby.ios16",
+            "detail": "PSListItemsController",
+            "key": "language",
+            "label": "Language",
+            "shortTitles": [
+                "Auto (System Language)",
+                "English",
+                "Bahasa Indonesia",
+                "Tiếng Việt"
+            ],
+            "validTitles": [
+                "Auto (System Language)",
+                "English",
+                "Bahasa Indonesia",
+                "Tiếng Việt"
+            ],
+            "validValues": [
+                0,
+                1,
+                2,
+                3
+            ]
+        }
+        root_pl["items"].insert(enabled_idx + 1, lang_group)
+        root_pl["items"].insert(enabled_idx + 2, lang_cell)
 
     # Check if Respring and Credits cells already exist
     existing_actions = [it for it in root_pl["items"] if it.get("action") == "respring:"]
